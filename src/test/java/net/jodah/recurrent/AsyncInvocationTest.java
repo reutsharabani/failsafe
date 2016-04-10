@@ -21,7 +21,7 @@ public class AsyncInvocationTest {
   ConnectException e = new ConnectException();
   AsyncInvocation inv;
   RecurrentFuture<Object> future;
-  AsyncCallable<Object> callable;
+  AsyncContextualCallable<Object> callable;
   Scheduler scheduler;
 
   @BeforeMethod
@@ -29,7 +29,7 @@ public class AsyncInvocationTest {
   void beforeMethod() {
     scheduler = mock(Scheduler.class);
     future = mock(RecurrentFuture.class);
-    callable = mock(AsyncCallable.class);
+    callable = mock(AsyncContextualCallable.class);
   }
 
   public void testComplete() {

@@ -11,19 +11,20 @@ import net.jodah.recurrent.util.concurrent.Scheduler;
  * 
  * @author Jonathan Halterman
  */
-public class AsyncInvocation extends Invocation {
-  private final AsyncCallable<Object> callable;
+public final class AsyncInvocation extends Invocation {
+  private final AsyncContextualCallable<Object> callable;
   private final RecurrentFuture<Object> future;
-  private final AsyncListeners<Object> listeners;
+  private final Listeners<Object> listeners;
   private final Scheduler scheduler;
   volatile boolean completeCalled;
   volatile boolean retryCalled;
+  volatile boolean shouldRetry;
 
   @SuppressWarnings("unchecked")
-  <T> AsyncInvocation(AsyncCallable<T> callable, RetryPolicy retryPolicy, Scheduler scheduler,
-      RecurrentFuture<T> future, AsyncListeners<T> listeners) {
+  <T> AsyncInvocation(AsyncContextualCallable<T> callable, RetryPolicy retryPolicy, Scheduler scheduler,
+      RecurrentFuture<T> future, Listeners<T> listeners) {
     super(retryPolicy);
-    this.callable = (AsyncCallable<Object>) callable;
+    this.callable = (AsyncContextualCallable<Object>) callable;
     this.scheduler = scheduler;
     this.future = (RecurrentFuture<Object>) future;
     this.listeners = (AsyncListeners<Object>) listeners;
@@ -122,8 +123,8 @@ public class AsyncInvocation extends Invocation {
    * 
    * @throws IllegalStateException if the invocation is already complete
    */
-  private boolean completeInternal(Object result, Throwable failure, boolean checkArgs) {
-    boolean completed = super.complete(result, failure, checkArgs);
+  private synchronized boolean completeInternal(Object result, Throwable failure, boolean checkArgs) {
+    super.complete(result, failure, checkArgs);
     boolean success = completed && failure == null;
 
     // Handle failure
@@ -144,11 +145,10 @@ public class AsyncInvocation extends Invocation {
    * @throws IllegalStateException if the invocation is already complete
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  boolean completeOrRetry(Object result, Throwable failure) {
+  synchronized boolean completeOrRetry(Object result, Throwable failure) {
     boolean completed = super.complete(result, failure, true);
     boolean success = completed && failure == null;
-    boolean shouldRetry = completed ? false
-        : canRetryForInternal(result, failure) && !future.isDone() && !future.isCancelled();
+    shouldRetry = completed ? false : canRetryForInternal(result, failure) && !future.isDone() && !future.isCancelled();
 
     // Handle failure
     if (!success && !completeCalled && listeners != null)

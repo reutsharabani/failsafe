@@ -155,13 +155,15 @@ public class AsyncListeners<T> extends Listeners<T> {
     return this;
   }
 
+  @Override
   void handleFailedAttempt(T result, Throwable failure, InvocationStats stats, Scheduler scheduler) {
     call(asyncFailedAttemptListener, asyncCtxFailedAttemptListener, result, failure, stats, scheduler);
-    super.handleFailedAttempt(result, failure, stats);
+    super.handleFailedAttempt(result, failure, stats, scheduler);
   }
 
+  @Override
   void handleRetry(T result, Throwable failure, InvocationStats stats, Scheduler scheduler) {
     call(asyncRetryListener, asyncCtxRetryListener, result, failure, stats, scheduler);
-    super.handleRetry(result, failure, stats);
+    super.handleRetry(result, failure, stats, scheduler);
   }
 }
