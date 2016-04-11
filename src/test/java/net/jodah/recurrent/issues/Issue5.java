@@ -25,7 +25,7 @@ public class Issue5 {
         .retryWhen(null);
 
     ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-    RecurrentFuture<?> run = Recurrent.with(retryPolicy).with(executor).get(() -> {
+    RecurrentFuture<?> run = Recurrent.with(retryPolicy, executor).get(() -> {
       return null;
     });
 

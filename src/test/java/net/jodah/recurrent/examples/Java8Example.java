@@ -38,7 +38,7 @@ public class Java8Example {
         .forEach(System.out::println);
     
     // Create a retryable CompletableFuture
-    Recurrent.with(retryPolicy).with(executor).future(() -> CompletableFuture.supplyAsync(() -> "foo")
+    Recurrent.with(retryPolicy, executor).future(() -> CompletableFuture.supplyAsync(() -> "foo")
         .thenApplyAsync(value -> value + "bar")
         .thenAccept(System.out::println));
 

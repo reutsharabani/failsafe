@@ -60,8 +60,7 @@ public class VertxExample {
     });
 
     // Retryable sender
-    Recurrent.with(retryPolicy.copy().withDelay(1, TimeUnit.SECONDS))
-        .with(scheduler)
+    Recurrent.with(retryPolicy.copy().withDelay(1, TimeUnit.SECONDS), scheduler)
         .runAsync(invocation -> vertx.eventBus().send("ping-address", "ping!", reply -> {
           if (reply.succeeded())
             System.out.println("Received reply " + reply.result().body());

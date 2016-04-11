@@ -11,49 +11,46 @@ import net.jodah.recurrent.util.concurrent.Scheduler;
 import net.jodah.recurrent.util.concurrent.Schedulers;
 
 /**
- * Performs invocations with synchronous or asynchronous retries according to a {@link RetryPolicy}. Asynchronous
- * retries can optionally be performed on a {@link AsyncRunnable} or {@link AsyncCallable} which allow invocations to be
- * manually retried or completed.
+ * Performs invocations with synchronous or asynchronous retries according to a {@link RetryPolicy}.
  * 
  * @author Jonathan Halterman
  */
 public class Recurrent<T> {
   private static class AsyncRecurrentInternal implements AsyncRecurrent {
     private final RetryPolicy retryPolicy;
-    private Scheduler scheduler;
-    private final Listeners<?> listeners;
-    private AsyncListeners<?> asyncListeners;
+    private final Scheduler scheduler;
+    private Listeners<?> listeners;
 
-    private AsyncRecurrentInternal(RetryPolicy retryPolicy, Scheduler scheduler, Listeners<?> listeners) {
+    private AsyncRecurrentInternal(RetryPolicy retryPolicy, Scheduler scheduler) {
       this.retryPolicy = retryPolicy;
       this.scheduler = scheduler;
-      this.listeners = listeners;
     }
 
     @Override
-    public <T> CompletableFuture<T> future(AsyncCallable<CompletableFuture<T>> callable) {
-      java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
-      call(AsyncContextualCallable.ofFuture(callable), RecurrentFuture.of(response, scheduler, getListeners()));
-      return response;
-    }
-
-    @Override
+    @SuppressWarnings("unchecked")
     public <T> CompletableFuture<T> future(Callable<CompletableFuture<T>> callable) {
       java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
-      call(AsyncContextualCallable.ofFuture(callable), RecurrentFuture.of(response, scheduler, getListeners()));
+      call(AsyncContextualCallable.ofFuture(callable),
+          RecurrentFuture.of(response, scheduler, (Listeners<T>) listeners));
       return response;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> CompletableFuture<T> future(ContextualCallable<CompletableFuture<T>> callable) {
       java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
-      call(AsyncContextualCallable.ofFuture(callable), RecurrentFuture.of(response, scheduler, getListeners()));
+      call(AsyncContextualCallable.ofFuture(callable),
+          RecurrentFuture.of(response, scheduler, (Listeners<T>) listeners));
       return response;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
-    private <T> Listeners<T> getListeners() {
-      return (AsyncListeners<T>) (asyncListeners != null ? asyncListeners : listeners);
+    public <T> CompletableFuture<T> futureAsync(AsyncCallable<CompletableFuture<T>> callable) {
+      java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
+      call(AsyncContextualCallable.ofFuture(callable),
+          RecurrentFuture.of(response, scheduler, (Listeners<T>) listeners));
+      return response;
     }
 
     @Override
@@ -87,9 +84,8 @@ public class Recurrent<T> {
     }
 
     @Override
-    public AsyncRecurrent with(AsyncListeners<?> listeners) {
-      Assert.state(this.listeners == null, "cannot configure Listeners and AsyncListeners");
-      this.asyncListeners = Assert.notNull(listeners, "listeners");
+    public <T extends Listeners<?>> AsyncRecurrent with(T listeners) {
+      this.listeners = Assert.notNull(listeners, "listeners");
       return this;
     }
 
@@ -101,10 +97,10 @@ public class Recurrent<T> {
      */
     @SuppressWarnings("unchecked")
     private <T> RecurrentFuture<T> call(AsyncContextualCallable<T> callable, RecurrentFuture<T> future) {
-      Listeners<T> listeners = getListeners();
+      Listeners<T> typedListeners = (Listeners<T>) listeners;
       if (future == null)
-        future = new RecurrentFuture<T>(scheduler, listeners);
-      AsyncInvocation invocation = new AsyncInvocation(callable, retryPolicy, scheduler, future, listeners);
+        future = new RecurrentFuture<T>(scheduler, typedListeners);
+      AsyncInvocation invocation = new AsyncInvocation(callable, retryPolicy, scheduler, future, typedListeners);
       future.initialize(invocation);
       callable.initialize(invocation);
       future.setFuture((Future<T>) scheduler.schedule(callable, 0, TimeUnit.MILLISECONDS));
@@ -144,16 +140,6 @@ public class Recurrent<T> {
     public SyncRecurrent with(Listeners<?> listeners) {
       this.listeners = Assert.notNull(listeners, "listeners");
       return this;
-    }
-
-    @Override
-    public AsyncRecurrent with(ScheduledExecutorService executor) {
-      return with(Schedulers.of(Assert.notNull(executor, "executor")));
-    }
-
-    @Override
-    public AsyncRecurrent with(Scheduler scheduler) {
-      return new AsyncRecurrentInternal(retryPolicy, Assert.notNull(scheduler, "scheduler"), listeners);
     }
 
     /**
@@ -216,7 +202,27 @@ public class Recurrent<T> {
     }
   }
 
+  /**
+   * Creates and returns a new Recurrent instance that will perform invocations and retries synchronously according to
+   * the {@code retryPolicy}.
+   */
   public static SyncRecurrent with(RetryPolicy retryPolicy) {
     return new SyncRecurrentInternal(retryPolicy);
+  }
+
+  /**
+   * Creates and returns a new Recurrent instance that will perform invocations and retries asynchronously via the
+   * {@code executor} according to the {@code retryPolicy}.
+   */
+  public static AsyncRecurrent with(RetryPolicy retryPolicy, ScheduledExecutorService executor) {
+    return new AsyncRecurrentInternal(retryPolicy, Schedulers.of(executor));
+  }
+
+  /**
+   * Creates and returns a new Recurrent instance that will perform invocations and retries asynchronously via the
+   * {@code scheduler} according to the {@code retryPolicy}.
+   */
+  public static AsyncRecurrent with(RetryPolicy retryPolicy, Scheduler scheduler) {
+    return new AsyncRecurrentInternal(retryPolicy, scheduler);
   }
 }

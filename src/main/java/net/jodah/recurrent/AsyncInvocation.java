@@ -111,9 +111,11 @@ public final class AsyncInvocation extends Invocation {
   }
 
   /**
-   * Resets the retry flag.
+   * Prepares for a retry by resetting internal flags and calling the retry listeners.
    */
-  void reset() {
+  void prepare() {
+    if (completeCalled && listeners != null)
+      listeners.handleRetry(lastResult, lastFailure, this, scheduler);
     completeCalled = false;
     retryCalled = false;
   }
@@ -155,11 +157,8 @@ public final class AsyncInvocation extends Invocation {
       listeners.handleFailedAttempt(result, failure, this, scheduler);
 
     // Handle retry needed
-    if (shouldRetry) {
-      if (listeners != null)
-        listeners.handleRetry(result, failure, this, scheduler);
+    if (shouldRetry)
       future.setFuture((Future) scheduler.schedule(callable, waitTime, TimeUnit.NANOSECONDS));
-    }
 
     // Handle completed
     if (completed || !shouldRetry)

@@ -37,8 +37,7 @@ public class Issue9 {
 
     // When
     AtomicInteger successCounter = new AtomicInteger();
-    RecurrentFuture<Boolean> future = Recurrent.with(new RetryPolicy().withMaxRetries(2))
-        .with(executor)
+    RecurrentFuture<Boolean> future = Recurrent.with(new RetryPolicy().withMaxRetries(2), executor)
         .with(listeners)
         .get(() -> service.connect())
         .whenSuccess(p -> {

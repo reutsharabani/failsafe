@@ -17,12 +17,12 @@ import java.net.ConnectException;
 import java.net.SocketException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -62,7 +62,7 @@ public class RecurrentTest {
     counter = new AtomicInteger();
   }
 
-  public void assertRun(Object runnable) throws Throwable {
+  private void assertRun(Object runnable) throws Throwable {
     // Given - Fail twice then succeed
     when(service.connect()).thenThrow(failures(2, SocketException.class)).thenReturn(true);
 
@@ -80,7 +80,7 @@ public class RecurrentTest {
     // When / Then
     assertThrows(() -> {
       run(Recurrent.with(retryTwice), runnable);
-    }, syncThrowables);
+    } , syncThrowables);
     verify(service, times(3)).connect();
   }
 
@@ -100,7 +100,7 @@ public class RecurrentTest {
     when(service.connect()).thenThrow(failures(2, SocketException.class)).thenReturn(true);
 
     // When
-    RecurrentFuture<?> future = run(Recurrent.with(retryAlways).with(executor), runnable);
+    RecurrentFuture<?> future = run(Recurrent.with(retryAlways, executor), runnable);
 
     // Then
     future.whenComplete((result, failure) -> {
@@ -118,7 +118,7 @@ public class RecurrentTest {
     when(service.connect()).thenThrow(failures(10, SocketException.class));
 
     // When
-    RecurrentFuture<?> future2 = run(Recurrent.with(retryTwice).with(executor), runnable);
+    RecurrentFuture<?> future2 = run(Recurrent.with(retryTwice, executor), runnable);
 
     // Then
     future2.whenComplete((result, failure) -> {
@@ -157,7 +157,7 @@ public class RecurrentTest {
     });
   }
 
-  public void assertGet(Object callable) throws Throwable {
+  private void assertGet(Object callable) throws Throwable {
     // Given - Fail twice then succeed
     when(service.connect()).thenThrow(failures(2, SocketException.class)).thenReturn(false, false, true);
     RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
@@ -192,7 +192,7 @@ public class RecurrentTest {
     RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
 
     // When
-    RecurrentFuture<Boolean> future = get(Recurrent.with(retryPolicy).with(executor), callable);
+    RecurrentFuture<Boolean> future = get(Recurrent.with(retryPolicy, executor), callable);
 
     // Then
     future.whenComplete((result, failure) -> {
@@ -210,7 +210,7 @@ public class RecurrentTest {
     when(service.connect()).thenThrow(failures(10, SocketException.class));
 
     // When
-    RecurrentFuture<Boolean> future2 = get(Recurrent.with(retryTwice).with(executor), callable);
+    RecurrentFuture<Boolean> future2 = get(Recurrent.with(retryTwice, executor), callable);
 
     // Then
     future2.whenComplete((result, failure) -> {
@@ -258,7 +258,7 @@ public class RecurrentTest {
     RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
 
     // When
-    CompletableFuture<Boolean> future = future(Recurrent.with(retryPolicy).with(executor), callable);
+    CompletableFuture<Boolean> future = future(Recurrent.with(retryPolicy, executor), callable);
 
     // Then
     future.whenComplete((result, failure) -> {
@@ -275,7 +275,7 @@ public class RecurrentTest {
     when(service.connect()).thenThrow(failures(10, SocketException.class));
 
     // When
-    CompletableFuture<Boolean> future2 = future(Recurrent.with(retryTwice).with(executor), callable);
+    CompletableFuture<Boolean> future2 = future(Recurrent.with(retryTwice, executor), callable);
 
     // Then
     future2.whenComplete((result, failure) -> {
@@ -341,15 +341,14 @@ public class RecurrentTest {
   }
 
   public void shouldCancelFuture() throws Throwable {
-    RecurrentFuture<?> future = Recurrent.with(retryAlways)
-        .with(executor)
+    RecurrentFuture<?> future = Recurrent.with(retryAlways, executor)
         .run(() -> ignoreExceptions(() -> Thread.sleep(10000)));
     future.cancel(true);
     assertTrue(future.isCancelled());
   }
 
   public void shouldManuallyRetryAndComplete() throws Throwable {
-    Recurrent.with(retryAlways).with(executor).getAsync(inv -> {
+    Recurrent.with(retryAlways, executor).getAsync(inv -> {
       if (inv.getAttemptCount() < 2)
         inv.retryOn(new ConnectException());
       else
@@ -396,14 +395,14 @@ public class RecurrentTest {
    */
   public void shouldCompleteAsync() throws Throwable {
     Waiter waiter = new Waiter();
-    Recurrent.with(retryAlways).with(executor).runAsync(inv -> executor.schedule(() -> {
+    Recurrent.with(retryAlways, executor).runAsync(inv -> executor.schedule(() -> {
       try {
         inv.complete();
         waiter.resume();
       } catch (Exception e) {
         waiter.fail(e);
       }
-    }, 100, TimeUnit.MILLISECONDS));
+    } , 100, TimeUnit.MILLISECONDS));
 
     waiter.await(5000);
   }
@@ -431,19 +430,19 @@ public class RecurrentTest {
     }
   }
 
+  private void run(SyncRecurrent recurrent, Object runnable) {
+    if (runnable instanceof CheckedRunnable)
+      recurrent.run((CheckedRunnable) runnable);
+    else if (runnable instanceof ContextualRunnable)
+      recurrent.run((ContextualRunnable) runnable);
+  }
+
   @SuppressWarnings("unchecked")
   private <T> T get(SyncRecurrent recurrent, Object callable) {
     if (callable instanceof Callable)
       return recurrent.get((Callable<T>) callable);
     else
       return recurrent.get((ContextualCallable<T>) callable);
-  }
-
-  private void run(SyncRecurrent recurrent, Object runnable) {
-    if (runnable instanceof CheckedRunnable)
-      recurrent.run((CheckedRunnable) runnable);
-    else if (runnable instanceof ContextualRunnable)
-      recurrent.run((ContextualRunnable) runnable);
   }
 
   private RecurrentFuture<?> run(AsyncRecurrent recurrent, Object runnable) {
@@ -472,6 +471,6 @@ public class RecurrentTest {
     else if (callable instanceof ContextualCallable)
       return recurrent.future((ContextualCallable<CompletableFuture<T>>) callable);
     else
-      return recurrent.future((AsyncCallable<CompletableFuture<T>>) callable);
+      return recurrent.futureAsync((AsyncCallable<CompletableFuture<T>>) callable);
   }
 }
