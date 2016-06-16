@@ -18,51 +18,207 @@ import net.jodah.failsafe.util.concurrent.Scheduler;
  * 
  * @author Jonathan Halterman
  */
-public class AsyncFailsafe {
-  private RetryPolicy retryPolicy;
-  private CircuitBreaker circuitBreaker;
-  private final Scheduler scheduler;
-  private Listeners<?> listeners;
+public class AsyncFailsafe<S, R> extends AsyncListenerConfig<S, R> {
+  RetryPolicy retryPolicy;
+  CircuitBreaker circuitBreaker;
+  Scheduler scheduler;
+  Listeners<?> listeners;
 
-  AsyncFailsafe(RetryPolicy retryPolicy, CircuitBreaker circuitBreaker, Scheduler scheduler, Listeners<?> listeners) {
-    this.retryPolicy = retryPolicy;
-    this.circuitBreaker = circuitBreaker;
-    this.scheduler = scheduler;
-    this.listeners = listeners;
+  public static class UntypedAsyncFailsafe extends AsyncFailsafe<UntypedAsyncFailsafe, Object> {
+    UntypedAsyncFailsafe(RetryPolicy retryPolicy, CircuitBreaker circuitBreaker, Scheduler scheduler) {
+      this.retryPolicy = retryPolicy;
+      this.circuitBreaker = circuitBreaker;
+      this.scheduler = scheduler;
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until a successful result is returned or the configured
+     * {@link RetryPolicy} is exceeded.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public <T> FailsafeFuture<T> get(Callable<T> callable) {
+      return call(Callables.asyncOf(callable), null);
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until a successful result is returned or the configured
+     * {@link RetryPolicy} is exceeded.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public <T> FailsafeFuture<T> get(ContextualCallable<T> callable) {
+      return call(Callables.asyncOf(callable), null);
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until a successful result is returned or the configured
+     * {@link RetryPolicy} is exceeded. This method is intended for integration with asynchronous code. Retries must be
+     * manually scheduled via one of the {@code AsyncExecution.retry} methods.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public <T> FailsafeFuture<T> getAsync(AsyncCallable<T> callable) {
+      return call(Callables.asyncOf(callable), null);
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until the resulting future is successfully completed or the
+     * configured {@link RetryPolicy} is exceeded.
+     * <p>
+     * Supported on Java 8 and above.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public <T> java.util.concurrent.CompletableFuture<T> future(
+        Callable<java.util.concurrent.CompletableFuture<T>> callable) {
+      java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
+      call(Callables.ofFuture(callable), FailsafeFuture.of(response, scheduler, null));
+      return response;
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until the resulting future is successfully completed or the
+     * configured {@link RetryPolicy} is exceeded.
+     * <p>
+     * Supported on Java 8 and above.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public <T> java.util.concurrent.CompletableFuture<T> future(
+        ContextualCallable<java.util.concurrent.CompletableFuture<T>> callable) {
+      java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
+      call(Callables.ofFuture(callable), FailsafeFuture.of(response, scheduler, null));
+      return response;
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until the resulting future is successfully completed or the
+     * configured {@link RetryPolicy} is exceeded. This method is intended for integration with asynchronous code.
+     * Retries must be manually scheduled via one of the {@code AsyncExecution.retry} methods.
+     * <p>
+     * Supported on Java 8 and above.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public <T> java.util.concurrent.CompletableFuture<T> futureAsync(
+        AsyncCallable<java.util.concurrent.CompletableFuture<T>> callable) {
+      java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
+      call(Callables.ofFuture(callable), FailsafeFuture.of(response, scheduler, null));
+      return response;
+    }
+
+    /**
+     * Configures the {@code listeners} to be called as execution events occur.
+     * 
+     * @throws NullPointerException if {@code listeners} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public <T extends Listeners<T>> TypedAsyncFailsafe<T> with(T listeners) {
+      return new TypedAsyncFailsafe<T>(retryPolicy, circuitBreaker, scheduler, Assert.notNull(listeners, "listeners"));
+    }
   }
 
-  /**
-   * Executes the {@code callable} asynchronously until a successful result is returned or the configured
-   * {@link RetryPolicy} is exceeded.
-   * 
-   * @throws NullPointerException if the {@code callable} is null
-   * @throws CircuitBreakerOpenException if a configured circuit breaker is open
-   */
-  public <T> FailsafeFuture<T> get(Callable<T> callable) {
-    return call(Callables.asyncOf(callable), null);
-  }
+  public static class TypedAsyncFailsafe<T> extends AsyncFailsafe<TypedAsyncFailsafe<T>, T> {
+    TypedAsyncFailsafe(RetryPolicy retryPolicy, CircuitBreaker circuitBreaker, Scheduler scheduler,
+        Listeners<T> listeners) {
+      this.retryPolicy = retryPolicy;
+      this.circuitBreaker = circuitBreaker;
+      this.scheduler = scheduler;
+      this.listeners = listeners;
+    }
 
-  /**
-   * Executes the {@code callable} asynchronously until a successful result is returned or the configured
-   * {@link RetryPolicy} is exceeded.
-   * 
-   * @throws NullPointerException if the {@code callable} is null
-   * @throws CircuitBreakerOpenException if a configured circuit breaker is open
-   */
-  public <T> FailsafeFuture<T> get(ContextualCallable<T> callable) {
-    return call(Callables.asyncOf(callable), null);
-  }
+    /**
+     * Executes the {@code callable} asynchronously until a successful result is returned or the configured
+     * {@link RetryPolicy} is exceeded.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public FailsafeFuture<T> get(Callable<T> callable) {
+      return call(Callables.asyncOf(callable), null);
+    }
 
-  /**
-   * Executes the {@code callable} asynchronously until a successful result is returned or the configured
-   * {@link RetryPolicy} is exceeded. This method is intended for integration with asynchronous code. Retries must be
-   * manually scheduled via one of the {@code AsyncExecution.retry} methods.
-   * 
-   * @throws NullPointerException if the {@code callable} is null
-   * @throws CircuitBreakerOpenException if a configured circuit breaker is open
-   */
-  public <T> FailsafeFuture<T> getAsync(AsyncCallable<T> callable) {
-    return call(Callables.asyncOf(callable), null);
+    /**
+     * Executes the {@code callable} asynchronously until a successful result is returned or the configured
+     * {@link RetryPolicy} is exceeded.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public FailsafeFuture<T> get(ContextualCallable<T> callable) {
+      return call(Callables.asyncOf(callable), null);
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until a successful result is returned or the configured
+     * {@link RetryPolicy} is exceeded. This method is intended for integration with asynchronous code. Retries must be
+     * manually scheduled via one of the {@code AsyncExecution.retry} methods.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    public FailsafeFuture<T> getAsync(AsyncCallable<T> callable) {
+      return call(Callables.asyncOf(callable), null);
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until the resulting future is successfully completed or the
+     * configured {@link RetryPolicy} is exceeded.
+     * <p>
+     * Supported on Java 8 and above.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    @SuppressWarnings("unchecked")
+    public java.util.concurrent.CompletableFuture<T> future(
+        Callable<java.util.concurrent.CompletableFuture<T>> callable) {
+      java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
+      call(Callables.ofFuture(callable), FailsafeFuture.of(response, scheduler, (Listeners<T>) listeners));
+      return response;
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until the resulting future is successfully completed or the
+     * configured {@link RetryPolicy} is exceeded.
+     * <p>
+     * Supported on Java 8 and above.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    @SuppressWarnings("unchecked")
+    public java.util.concurrent.CompletableFuture<T> future(
+        ContextualCallable<java.util.concurrent.CompletableFuture<T>> callable) {
+      java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
+      call(Callables.ofFuture(callable), FailsafeFuture.of(response, scheduler, (Listeners<T>) listeners));
+      return response;
+    }
+
+    /**
+     * Executes the {@code callable} asynchronously until the resulting future is successfully completed or the
+     * configured {@link RetryPolicy} is exceeded. This method is intended for integration with asynchronous code.
+     * Retries must be manually scheduled via one of the {@code AsyncExecution.retry} methods.
+     * <p>
+     * Supported on Java 8 and above.
+     * 
+     * @throws NullPointerException if the {@code callable} is null
+     * @throws CircuitBreakerOpenException if a configured circuit breaker is open
+     */
+    @SuppressWarnings("unchecked")
+    public java.util.concurrent.CompletableFuture<T> futureAsync(
+        AsyncCallable<java.util.concurrent.CompletableFuture<T>> callable) {
+      java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
+      call(Callables.ofFuture(callable), FailsafeFuture.of(response, scheduler, (Listeners<T>) listeners));
+      return response;
+    }
   }
 
   /**
@@ -100,67 +256,16 @@ public class AsyncFailsafe {
   }
 
   /**
-   * Executes the {@code callable} asynchronously until the resulting future is successfully completed or the configured
-   * {@link RetryPolicy} is exceeded.
-   * <p>
-   * Supported on Java 8 and above.
-   * 
-   * @throws NullPointerException if the {@code callable} is null
-   * @throws CircuitBreakerOpenException if a configured circuit breaker is open
-   */
-  @SuppressWarnings("unchecked")
-  public <T> java.util.concurrent.CompletableFuture<T> future(
-      Callable<java.util.concurrent.CompletableFuture<T>> callable) {
-    java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
-    call(Callables.ofFuture(callable), FailsafeFuture.of(response, scheduler, (Listeners<T>) listeners));
-    return response;
-  }
-
-  /**
-   * Executes the {@code callable} asynchronously until the resulting future is successfully completed or the configured
-   * {@link RetryPolicy} is exceeded.
-   * <p>
-   * Supported on Java 8 and above.
-   * 
-   * @throws NullPointerException if the {@code callable} is null
-   * @throws CircuitBreakerOpenException if a configured circuit breaker is open
-   */
-  @SuppressWarnings("unchecked")
-  public <T> java.util.concurrent.CompletableFuture<T> future(
-      ContextualCallable<java.util.concurrent.CompletableFuture<T>> callable) {
-    java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
-    call(Callables.ofFuture(callable), FailsafeFuture.of(response, scheduler, (Listeners<T>) listeners));
-    return response;
-  }
-
-  /**
-   * Executes the {@code callable} asynchronously until the resulting future is successfully completed or the configured
-   * {@link RetryPolicy} is exceeded. This method is intended for integration with asynchronous code. Retries must be
-   * manually scheduled via one of the {@code AsyncExecution.retry} methods.
-   * <p>
-   * Supported on Java 8 and above.
-   * 
-   * @throws NullPointerException if the {@code callable} is null
-   * @throws CircuitBreakerOpenException if a configured circuit breaker is open
-   */
-  @SuppressWarnings("unchecked")
-  public <T> java.util.concurrent.CompletableFuture<T> futureAsync(
-      AsyncCallable<java.util.concurrent.CompletableFuture<T>> callable) {
-    java.util.concurrent.CompletableFuture<T> response = new java.util.concurrent.CompletableFuture<T>();
-    call(Callables.ofFuture(callable), FailsafeFuture.of(response, scheduler, (Listeners<T>) listeners));
-    return response;
-  }
-
-  /**
    * Configures the {@code circuitBreaker} to be used to control the rate of event execution.
    * 
    * @throws NullPointerException if {@code circuitBreaker} is null
    * @throws IllegalStateException if a circuit breaker is already configured
    */
-  public AsyncFailsafe with(CircuitBreaker circuitBreaker) {
+  @SuppressWarnings("unchecked")
+  public S with(CircuitBreaker circuitBreaker) {
     Assert.state(this.circuitBreaker == null, "A circuit breaker has already been configurd");
     this.circuitBreaker = Assert.notNull(circuitBreaker, "circuitBreaker");
-    return this;
+    return (S) this;
   }
 
   /**
@@ -169,21 +274,11 @@ public class AsyncFailsafe {
    * @throws NullPointerException if {@code retryPolicy} is null
    * @throws IllegalStateException if a retry policy is already configured
    */
-  public AsyncFailsafe with(RetryPolicy retryPolicy) {
+  @SuppressWarnings("unchecked")
+  public S with(RetryPolicy retryPolicy) {
     Assert.state(this.retryPolicy == RetryPolicy.NEVER, "A retry policy has already been configurd");
     this.retryPolicy = Assert.notNull(retryPolicy, "retryPolicy");
-    return this;
-  }
-
-  /**
-   * Configures the {@code listeners} to be called as execution events occur.
-   * 
-   * @throws NullPointerException if {@code listeners} is null
-   * @throws CircuitBreakerOpenException if a configured circuit breaker is open
-   */
-  public <T extends Listeners<?>> AsyncFailsafe with(T listeners) {
-    this.listeners = Assert.notNull(listeners, "listeners");
-    return this;
+    return (S) this;
   }
 
   /**
@@ -194,7 +289,7 @@ public class AsyncFailsafe {
    * @throws CircuitBreakerOpenException if a configured circuit breaker is open
    */
   @SuppressWarnings("unchecked")
-  private <T> FailsafeFuture<T> call(AsyncCallableWrapper<T> callable, FailsafeFuture<T> future) {
+  <T> FailsafeFuture<T> call(AsyncCallableWrapper<T> callable, FailsafeFuture<T> future) {
     if (circuitBreaker != null) {
       circuitBreaker.initialize();
       if (!circuitBreaker.allowsExecution())
