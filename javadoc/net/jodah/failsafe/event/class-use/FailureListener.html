@@ -113,7 +113,8 @@
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../net/jodah/failsafe/AsyncListenerBindings.html" title="type parameter in AsyncListenerBindings">S</a></code></td>
 <td class="colLast"><span class="typeNameLabel">AsyncListenerBindings.</span><code><span class="memberNameLink"><a href="../../../../../net/jodah/failsafe/AsyncListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.FailureListener-">onFailedAttemptAsync</a></span>(<a href="../../../../../net/jodah/failsafe/event/FailureListener.html" title="interface in net.jodah.failsafe.event">FailureListener</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;listener)</code>
-<div class="block">Registers the <code>listener</code> to be called asynchronously after a failed execution attempt.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler after a
+ failed execution attempt.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -133,8 +134,8 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../net/jodah/failsafe/AsyncListenerBindings.html" title="type parameter in AsyncListenerBindings">S</a></code></td>
 <td class="colLast"><span class="typeNameLabel">AsyncListenerBindings.</span><code><span class="memberNameLink"><a href="../../../../../net/jodah/failsafe/AsyncListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.FailureListener-">onFailureAsync</a></span>(<a href="../../../../../net/jodah/failsafe/event/FailureListener.html" title="interface in net.jodah.failsafe.event">FailureListener</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;listener)</code>
-<div class="block">Registers the <code>listener</code> to be called asynchronously when the retry policy is exceeded and the result is a
- failure.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler when
+ the retry policy is exceeded and the result is a failure.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -154,7 +155,8 @@
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../net/jodah/failsafe/AsyncListenerBindings.html" title="type parameter in AsyncListenerBindings">S</a></code></td>
 <td class="colLast"><span class="typeNameLabel">AsyncListenerBindings.</span><code><span class="memberNameLink"><a href="../../../../../net/jodah/failsafe/AsyncListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.FailureListener-">onRetryAsync</a></span>(<a href="../../../../../net/jodah/failsafe/event/FailureListener.html" title="interface in net.jodah.failsafe.event">FailureListener</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;listener)</code>
-<div class="block">Registers the <code>listener</code> to be called asynchronously before a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler before
+ a retry is attempted.</div>
 </td>
 </tr>
 <tr class="altColor">
