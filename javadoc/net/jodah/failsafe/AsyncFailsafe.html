@@ -50,7 +50,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../net/jodah/failsafe/AsyncExecution.html" title="class in net.jodah.failsafe"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../net/jodah/failsafe/AsyncListeners.html" title="class in net.jodah.failsafe"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?net/jodah/failsafe/AsyncFailsafe.html" target="_top">Frames</a></li>
@@ -93,24 +93,38 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">net.jodah.failsafe</div>
-<h2 title="Class AsyncFailsafe" class="title">Class AsyncFailsafe</h2>
+<h2 title="Class AsyncFailsafe" class="title">Class AsyncFailsafe&lt;L&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
 <li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li>net.jodah.failsafe.AsyncFailsafe</li>
+<li><a href="../../../net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">net.jodah.failsafe.ListenerBindings</a>&lt;S,T&gt;</li>
+<li>
+<ul class="inheritance">
+<li><a href="../../../net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">net.jodah.failsafe.AsyncListenerBindings</a>&lt;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;L&gt;,L&gt;</li>
+<li>
+<ul class="inheritance">
+<li>net.jodah.failsafe.AsyncFailsafe&lt;L&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>L</code> - listener result type</dd>
+</dl>
 <hr>
 <br>
-<pre>public class <span class="typeNameLabel">AsyncFailsafe</span>
-extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<pre>public class <span class="typeNameLabel">AsyncFailsafe&lt;L&gt;</span>
+extends <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a>&lt;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;L&gt;,L&gt;</pre>
 <div class="block">Performs asynchronous executions according to a <a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe"><code>RetryPolicy</code></a> and <a href="../../../net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe"><code>CircuitBreaker</code></a>.</div>
 </li>
 </ul>
@@ -194,24 +208,38 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a></code></td>
+<td class="colFirst"><code><a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">L</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/AsyncFailsafe.html#with-net.jodah.failsafe.CircuitBreaker-">with</a></span>(<a href="../../../net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a>&nbsp;circuitBreaker)</code>
 <div class="block">Configures the <code>circuitBreaker</code> to be used to control the rate of event execution.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a></code></td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/AsyncFailsafe.html#with-net.jodah.failsafe.Listeners-">with</a></span>(<a href="../../../net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a>&lt;T&gt;&nbsp;listeners)</code>
+<div class="block">Configures the <code>listeners</code> to be called as execution events occur.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">L</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/AsyncFailsafe.html#with-net.jodah.failsafe.RetryPolicy-">with</a></span>(<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;retryPolicy)</code>
 <div class="block">Configures the <code>retryPolicy</code> to be used for retrying failed executions.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>&lt;T extends <a href="../../../net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a>&lt;?&gt;&gt;<br><a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/AsyncFailsafe.html#with-T-">with</a></span>(T&nbsp;listeners)</code>
-<div class="block">Configures the <code>listeners</code> to be called as execution events occur.</div>
-</td>
-</tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.net.jodah.failsafe.AsyncListenerBindings">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;net.jodah.failsafe.<a href="../../../net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></h3>
+<code><a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onCompleteAsync-net.jodah.failsafe.event.ContextualResultListener-">onCompleteAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onCompleteAsync-net.jodah.failsafe.event.ResultListener-">onCompleteAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.ContextualResultListener-">onFailedAttemptAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.FailureListener-">onFailedAttemptAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.ResultListener-">onFailedAttemptAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.ContextualResultListener-">onFailureAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.FailureListener-">onFailureAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.ResultListener-">onFailureAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.ContextualResultListener-">onRetryAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.FailureListener-">onRetryAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.ResultListener-">onRetryAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onSuccessAsync-net.jodah.failsafe.event.ContextualSuccessListener-">onSuccessAsync</a>, <a href="../../../net/jodah/failsafe/AsyncListenerBindings.html#onSuccessAsync-net.jodah.failsafe.event.SuccessListener-">onSuccessAsync</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.net.jodah.failsafe.ListenerBindings">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;net.jodah.failsafe.<a href="../../../net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></h3>
+<code><a href="../../../net/jodah/failsafe/ListenerBindings.html#onComplete-net.jodah.failsafe.event.ContextualResultListener-">onComplete</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onComplete-net.jodah.failsafe.event.ResultListener-">onComplete</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onCompleteAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onCompleteAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onCompleteAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onCompleteAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailedAttempt-net.jodah.failsafe.event.ContextualResultListener-">onFailedAttempt</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailedAttempt-net.jodah.failsafe.event.FailureListener-">onFailedAttempt</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailedAttempt-net.jodah.failsafe.event.ResultListener-">onFailedAttempt</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onFailedAttemptAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onFailedAttemptAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onFailedAttemptAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailure-net.jodah.failsafe.event.ContextualResultListener-">onFailure</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailure-net.jodah.failsafe.event.FailureListener-">onFailure</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailure-net.jodah.failsafe.event.ResultListener-">onFailure</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onFailureAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onFailureAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onFailureAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onRetry-net.jodah.failsafe.event.ContextualResultListener-">onRetry</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onRetry-net.jodah.failsafe.event.FailureListener-">onRetry</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onRetry-net.jodah.failsafe.event.ResultListener-">onRetry</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onRetryAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onRetryAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onRetryAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onSuccess-net.jodah.failsafe.event.ContextualSuccessListener-">onSuccess</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onSuccess-net.jodah.failsafe.event.SuccessListener-">onSuccess</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onSuccessAsync-net.jodah.failsafe.event.ContextualSuccessListener-java.util.concurrent.ExecutorService-">onSuccessAsync</a>, <a href="../../../net/jodah/failsafe/ListenerBindings.html#onSuccessAsync-net.jodah.failsafe.event.SuccessListener-java.util.concurrent.ExecutorService-">onSuccessAsync</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -392,7 +420,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>with</h4>
-<pre>public&nbsp;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&nbsp;with(<a href="../../../net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a>&nbsp;circuitBreaker)</pre>
+<pre>public&nbsp;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">L</a>&gt;&nbsp;with(<a href="../../../net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a>&nbsp;circuitBreaker)</pre>
 <div class="block">Configures the <code>circuitBreaker</code> to be used to control the rate of event execution.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -407,7 +435,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <ul class="blockList">
 <li class="blockList">
 <h4>with</h4>
-<pre>public&nbsp;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&nbsp;with(<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;retryPolicy)</pre>
+<pre>public&nbsp;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">L</a>&gt;&nbsp;with(<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;retryPolicy)</pre>
 <div class="block">Configures the <code>retryPolicy</code> to be used for retrying failed executions.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -418,18 +446,15 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </ul>
 <a name="with-net.jodah.failsafe.Listeners-">
 <!--   -->
-</a><a name="with-T-">
-<!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>with</h4>
-<pre>public&nbsp;&lt;T extends <a href="../../../net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a>&lt;?&gt;&gt;&nbsp;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&nbsp;with(T&nbsp;listeners)</pre>
+<pre>public&nbsp;&lt;T&gt;&nbsp;<a href="../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;T&gt;&nbsp;with(<a href="../../../net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a>&lt;T&gt;&nbsp;listeners)</pre>
 <div class="block">Configures the <code>listeners</code> to be called as execution events occur.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>listeners</code> is null</dd>
-<dd><code><a href="../../../net/jodah/failsafe/CircuitBreakerOpenException.html" title="class in net.jodah.failsafe">CircuitBreakerOpenException</a></code> - if a configured circuit breaker is open</dd>
 </dl>
 </li>
 </ul>
@@ -462,7 +487,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../net/jodah/failsafe/AsyncExecution.html" title="class in net.jodah.failsafe"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../net/jodah/failsafe/AsyncListeners.html" title="class in net.jodah.failsafe"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?net/jodah/failsafe/AsyncFailsafe.html" target="_top">Frames</a></li>
