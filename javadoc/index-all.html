@@ -110,11 +110,11 @@
 <dd>
 <div class="block">Tracks asynchronous executions and allows retries to be scheduled according to a <a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe"><code>RetryPolicy</code></a>.</div>
 </dd>
-<dt><a href="net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe"><span class="typeNameLink">AsyncFailsafe</span></a>&lt;<a href="net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">L</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
+<dt><a href="net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe"><span class="typeNameLink">AsyncFailsafe</span></a>&lt;<a href="net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
 <dd>
 <div class="block">Performs asynchronous executions according to a <a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe"><code>RetryPolicy</code></a> and <a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe"><code>CircuitBreaker</code></a>.</div>
 </dd>
-<dt><a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe"><span class="typeNameLink">AsyncListenerBindings</span></a>&lt;<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="type parameter in AsyncListenerBindings">S</a>,<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="type parameter in AsyncListenerBindings">T</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
+<dt><a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe"><span class="typeNameLink">AsyncListenerConfig</span></a>&lt;<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="type parameter in AsyncListenerConfig">S</a>,<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="type parameter in AsyncListenerConfig">R</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
 <dd>
 <div class="block">Failsafe execution event listeners that are called asynchronously on the <a href="net/jodah/failsafe/util/concurrent/Scheduler.html" title="interface in net.jodah.failsafe.util.concurrent"><code>Scheduler</code></a> or
  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a> associated with the Failsafe call.</div>
@@ -143,7 +143,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#canAbortFor-java.lang.Object-java.lang.Throwable-">canAbortFor(Object, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
 <dd>
-<div class="block">Returns whether an execution can be aborted for the <code>result</code> and <code>failure</code> according to the policy.</div>
+<div class="block">Returns whether an execution can be aborted for the <code>result</code> and <code>failure</code> according to the configured
+ abort conditions.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeFuture.html#cancel-boolean-">cancel(boolean)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeFuture.html" title="class in net.jodah.failsafe">FailsafeFuture</a></dt>
 <dd>&nbsp;</dd>
@@ -165,7 +166,9 @@
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#canRetryFor-java.lang.Object-java.lang.Throwable-">canRetryFor(Object, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
 <dd>
-<div class="block">Returns whether an execution can be retried for the <code>result</code> and <code>failure</code> according to the policy.</div>
+<div class="block">Returns whether an execution can be retried for the <code>result</code> and <code>failure</code> according to configured
+ retry conditions, or if the <code>failure</code> is not null and no retry condition has been configured to check
+ failures.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/Execution.html#canRetryOn-java.lang.Throwable-">canRetryOn(Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Execution.html" title="class in net.jodah.failsafe">Execution</a></dt>
 <dd>
@@ -484,8 +487,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/CircuitBreaker.html#isFailure-java.lang.Object-java.lang.Throwable-">isFailure(Object, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a></dt>
 <dd>
-<div class="block">Returns whether the circuit breaker considers the <code>result</code> or <code>throwable</code> a failure based on its
- failure configuration.</div>
+<div class="block">Returns whether the circuit breaker considers the <code>result</code> or <code>throwable</code> a failure based on the
+ configured conditions, or if <code>failure</code> is not null it is not checked by any configured condition.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/CircuitBreaker.html#isOpen--">isOpen()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a></dt>
 <dd>
@@ -497,11 +500,11 @@
 </a>
 <h2 class="title">L</h2>
 <dl>
-<dt><a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe"><span class="typeNameLink">ListenerBindings</span></a>&lt;<a href="net/jodah/failsafe/ListenerBindings.html" title="type parameter in ListenerBindings">S</a>,<a href="net/jodah/failsafe/ListenerBindings.html" title="type parameter in ListenerBindings">T</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
+<dt><a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe"><span class="typeNameLink">ListenerConfig</span></a>&lt;<a href="net/jodah/failsafe/ListenerConfig.html" title="type parameter in ListenerConfig">S</a>,<a href="net/jodah/failsafe/ListenerConfig.html" title="type parameter in ListenerConfig">R</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
 <dd>
 <div class="block">Listener configuration.</div>
 </dd>
-<dt><a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe"><span class="typeNameLink">Listeners</span></a>&lt;<a href="net/jodah/failsafe/Listeners.html" title="type parameter in Listeners">T</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
+<dt><a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe"><span class="typeNameLink">Listeners</span></a>&lt;<a href="net/jodah/failsafe/Listeners.html" title="type parameter in Listeners">R</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
 <dd>
 <div class="block">Failsafe execution event listeners.</div>
 </dd>
@@ -547,197 +550,191 @@
 <dd>
 <div class="block">Returns a Scheduler adapted from the <code>executor</code>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onAbort-net.jodah.failsafe.event.FailureListener-">onAbort(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onAbort-net.jodah.failsafe.event.ContextualResultListener-">onAbort(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called when retries are aborted according to the retry policy.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution is aborted.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onAbort-net.jodah.failsafe.event.ResultListener-">onAbort(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onAbort-net.jodah.failsafe.event.FailureListener-">onAbort(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called when retries are aborted according to the retry policy.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution is aborted.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onAbort-net.jodah.failsafe.event.ContextualResultListener-">onAbort(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onAbort-net.jodah.failsafe.event.ResultListener-">onAbort(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called after a failed execution attempt.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution is aborted.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onAbort-T-java.lang.Throwable-">onAbort(T, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onAbort-R-java.lang.Throwable-">onAbort(R, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
 <div class="block">Called when an execution is aborted.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onAbort-T-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onAbort(T, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onAbort-R-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onAbort(R, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
 <div class="block">Called when an execution is aborted.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onAbortAsync-net.jodah.failsafe.event.ContextualResultListener-">onAbortAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onAbortAsync-net.jodah.failsafe.event.ContextualResultListener-">onAbortAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler when
- retries are aborted according to the retry policy.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler when an
+ execution is aborted according to the retry policy.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onAbortAsync-net.jodah.failsafe.event.FailureListener-">onAbortAsync(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onAbortAsync-net.jodah.failsafe.event.FailureListener-">onAbortAsync(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler when
- retries are aborted according to the retry policy.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler when an
+ execution is aborted according to the retry policy.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onAbortAsync-net.jodah.failsafe.event.ResultListener-">onAbortAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onAbortAsync-net.jodah.failsafe.event.ResultListener-">onAbortAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler when
- retries are aborted according to the retry policy.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler when an
+ execution is aborted according to the retry policy.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onAbortAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onAbortAsync(FailureListener&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onAbortAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onAbortAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when retries are aborted
- according to the retry policy.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution is aborted.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onAbortAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onAbortAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onAbortAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onAbortAsync(FailureListener&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when retries are aborted
- according to the retry policy.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution is aborted.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onAbortAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onAbortAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onAbortAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onAbortAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> after a failed execution
- attempt.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution is aborted.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/CircuitBreaker.html#onClose-net.jodah.failsafe.function.CheckedRunnable-">onClose(CheckedRunnable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a></dt>
 <dd>
 <div class="block">Calls the <code>runnable</code> when the circuit is closed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onComplete-net.jodah.failsafe.event.ContextualResultListener-">onComplete(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onComplete-net.jodah.failsafe.event.ContextualResultListener-">onComplete(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
 <div class="block">Registers the <code>listener</code> to be called when an execution is completed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onComplete-net.jodah.failsafe.event.ResultListener-">onComplete(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onComplete-net.jodah.failsafe.event.ResultListener-">onComplete(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
 <div class="block">Registers the <code>listener</code> to be called when an execution is completed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onComplete-T-java.lang.Throwable-">onComplete(T, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onComplete-R-java.lang.Throwable-">onComplete(R, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
 <div class="block">Called when an execution is completed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onComplete-T-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onComplete(T, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onComplete-R-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onComplete(R, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
 <div class="block">Called when an execution is completed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onCompleteAsync-net.jodah.failsafe.event.ContextualResultListener-">onCompleteAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onCompleteAsync-net.jodah.failsafe.event.ContextualResultListener-">onCompleteAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler when an
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler when an
  execution is completed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onCompleteAsync-net.jodah.failsafe.event.ResultListener-">onCompleteAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onCompleteAsync-net.jodah.failsafe.event.ResultListener-">onCompleteAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler when an
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler when an
  execution is completed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onCompleteAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onCompleteAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onCompleteAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onCompleteAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously when an execution is completed.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution is completed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onCompleteAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onCompleteAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onCompleteAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onCompleteAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously when an execution is completed.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution is completed.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailedAttempt-net.jodah.failsafe.event.ContextualResultListener-">onFailedAttempt(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailedAttempt-net.jodah.failsafe.event.ContextualResultListener-">onFailedAttempt(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called after a failed execution attempt.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution attempt fails.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailedAttempt-net.jodah.failsafe.event.FailureListener-">onFailedAttempt(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailedAttempt-net.jodah.failsafe.event.FailureListener-">onFailedAttempt(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called after a failed execution attempt.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution attempt fails.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailedAttempt-net.jodah.failsafe.event.ResultListener-">onFailedAttempt(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailedAttempt-net.jodah.failsafe.event.ResultListener-">onFailedAttempt(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called after a failed execution attempt.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution attempt fails.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onFailedAttempt-T-java.lang.Throwable-">onFailedAttempt(T, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onFailedAttempt-R-java.lang.Throwable-">onFailedAttempt(R, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
-<div class="block">Called after a failed attempt.</div>
+<div class="block">Called when an execution attempt fails.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onFailedAttempt-T-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onFailedAttempt(T, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onFailedAttempt-R-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onFailedAttempt(R, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
-<div class="block">Called after a failed attempt.</div>
+<div class="block">Called when an execution attempt fails.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.ContextualResultListener-">onFailedAttemptAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onFailedAttemptAsync-net.jodah.failsafe.event.ContextualResultListener-">onFailedAttemptAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler after a
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler after a
  failed execution attempt.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.FailureListener-">onFailedAttemptAsync(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onFailedAttemptAsync-net.jodah.failsafe.event.FailureListener-">onFailedAttemptAsync(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler after a
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler after a
  failed execution attempt.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.ResultListener-">onFailedAttemptAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onFailedAttemptAsync-net.jodah.failsafe.event.ResultListener-">onFailedAttemptAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler after a
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler after a
  failed execution attempt.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onFailedAttemptAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailedAttemptAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onFailedAttemptAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> after a failed execution
- attempt.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution attempt fails.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onFailedAttemptAsync(FailureListener&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailedAttemptAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onFailedAttemptAsync(FailureListener&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> after a failed execution
- attempt.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution attempt fails.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailedAttemptAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onFailedAttemptAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailedAttemptAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onFailedAttemptAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> after a failed execution
- attempt.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution attempt fails.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/event/FailureListener.html#onFailure-F-">onFailure(F)</a></span> - Method in interface net.jodah.failsafe.event.<a href="net/jodah/failsafe/event/FailureListener.html" title="interface in net.jodah.failsafe.event">FailureListener</a></dt>
 <dd>
 <div class="block">Handles an execution failure.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailure-net.jodah.failsafe.event.ContextualResultListener-">onFailure(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailure-net.jodah.failsafe.event.ContextualResultListener-">onFailure(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called when the retry policy is exceeded and the result is a failure.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution fails and cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailure-net.jodah.failsafe.event.FailureListener-">onFailure(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailure-net.jodah.failsafe.event.FailureListener-">onFailure(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called when the retry policy is exceeded and the result is a failure.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution fails and cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailure-net.jodah.failsafe.event.ResultListener-">onFailure(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailure-net.jodah.failsafe.event.ResultListener-">onFailure(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called when the retry policy is exceeded and the result is a failure.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution fails and cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onFailure-T-java.lang.Throwable-">onFailure(T, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onFailure-R-java.lang.Throwable-">onFailure(R, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
-<div class="block">Called after the retry policy is exceeded and the result is a failure.</div>
+<div class="block">Called when an execution fails and cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onFailure-T-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onFailure(T, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onFailure-R-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onFailure(R, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
-<div class="block">Called after the retry policy is exceeded and the result is a failure.</div>
+<div class="block">Called when an execution fails and cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.ContextualResultListener-">onFailureAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onFailureAsync-net.jodah.failsafe.event.ContextualResultListener-">onFailureAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler when
- the retry policy is exceeded and the result is a failure.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler after a
+ failure occurs that cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.FailureListener-">onFailureAsync(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onFailureAsync-net.jodah.failsafe.event.FailureListener-">onFailureAsync(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler when
- the retry policy is exceeded and the result is a failure.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler after a
+ failure occurs that cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.ResultListener-">onFailureAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onFailureAsync-net.jodah.failsafe.event.ResultListener-">onFailureAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler when
- the retry policy is exceeded and the result is a failure.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler after a
+ failure occurs that cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onFailureAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailureAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onFailureAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously when the retry policy is exceeded and the result is a
- failure.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution fails and
+ cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onFailureAsync(FailureListener&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailureAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onFailureAsync(FailureListener&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously when the retry policy is exceeded and the result is a
- failure.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution fails and
+ cannot be retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onFailureAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onFailureAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onFailureAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onFailureAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously when the retry policy is exceeded and the result is a
- failure.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution fails and
+ cannot be retried.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/CircuitBreaker.html#onHalfOpen-net.jodah.failsafe.function.CheckedRunnable-">onHalfOpen(CheckedRunnable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a></dt>
 <dd>
@@ -755,52 +752,84 @@
 <dd>
 <div class="block">Handles an execution result.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onRetry-net.jodah.failsafe.event.ContextualResultListener-">onRetry(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetriesExceeded-net.jodah.failsafe.event.FailureListener-">onRetriesExceeded(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called before a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution fails and retries are exceeded.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onRetry-net.jodah.failsafe.event.FailureListener-">onRetry(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetriesExceeded-net.jodah.failsafe.event.ResultListener-">onRetriesExceeded(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called before a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution fails and retries are exceeded.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onRetry-net.jodah.failsafe.event.ResultListener-">onRetry(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onRetriesExceeded-R-java.lang.Throwable-">onRetriesExceeded(R, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called before a retry is attempted.</div>
+<div class="block">Called when an execution fails and retries are exceeded.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onRetry-T-java.lang.Throwable-">onRetry(T, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onRetriesExceededAsync-net.jodah.failsafe.event.FailureListener-">onRetriesExceededAsync(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Called before a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler when an
+ execution fails and the retry policy is exceeded.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onRetry-T-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onRetry(T, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onRetriesExceededAsync-net.jodah.failsafe.event.ResultListener-">onRetriesExceededAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Called before a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler when an
+ execution fails and the retry policy is exceeded.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.ContextualResultListener-">onRetryAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetriesExceededAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onRetriesExceededAsync(FailureListener&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler before
- a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution fails and
+ retries are exceeded.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.FailureListener-">onRetryAsync(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetriesExceededAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onRetriesExceededAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler before
- a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution fails and
+ retries are exceeded.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.ResultListener-">onRetryAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetry-net.jodah.failsafe.event.ContextualResultListener-">onRetry(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler before
- a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called before an execution is retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onRetryAsync(ContextualResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetry-net.jodah.failsafe.event.FailureListener-">onRetry(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> before a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called before an execution is retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onRetryAsync(FailureListener&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetry-net.jodah.failsafe.event.ResultListener-">onRetry(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> before a retry is attempted.</div>
+<div class="block">Registers the <code>listener</code> to be called before an execution is retried.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onRetryAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onRetryAsync(ResultListener&lt;? extends T, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onRetry-R-java.lang.Throwable-">onRetry(R, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> before a retry is attempted.</div>
+<div class="block">Called before an execution is retried.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onRetry-R-java.lang.Throwable-net.jodah.failsafe.ExecutionContext-">onRetry(R, Throwable, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dd>
+<div class="block">Called before an execution is retried.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onRetryAsync-net.jodah.failsafe.event.ContextualResultListener-">onRetryAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
+<dd>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler before a
+ retry is attempted.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onRetryAsync-net.jodah.failsafe.event.FailureListener-">onRetryAsync(FailureListener&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
+<dd>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler before a
+ retry is attempted.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onRetryAsync-net.jodah.failsafe.event.ResultListener-">onRetryAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
+<dd>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler before a
+ retry is attempted.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetryAsync-net.jodah.failsafe.event.ContextualResultListener-java.util.concurrent.ExecutorService-">onRetryAsync(ContextualResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
+<dd>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> before an execution is retried.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetryAsync-net.jodah.failsafe.event.FailureListener-java.util.concurrent.ExecutorService-">onRetryAsync(FailureListener&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
+<dd>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> before an execution is retried.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onRetryAsync-net.jodah.failsafe.event.ResultListener-java.util.concurrent.ExecutorService-">onRetryAsync(ResultListener&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
+<dd>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> before an execution is retried.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/event/ContextualSuccessListener.html#onSuccess-R-net.jodah.failsafe.ExecutionContext-">onSuccess(R, ExecutionContext)</a></span> - Method in interface net.jodah.failsafe.event.<a href="net/jodah/failsafe/event/ContextualSuccessListener.html" title="interface in net.jodah.failsafe.event">ContextualSuccessListener</a></dt>
 <dd>
@@ -810,39 +839,39 @@
 <dd>
 <div class="block">Handles the successful completion of a call.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onSuccess-net.jodah.failsafe.event.ContextualSuccessListener-">onSuccess(ContextualSuccessListener&lt;? extends T&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onSuccess-net.jodah.failsafe.event.ContextualSuccessListener-">onSuccess(ContextualSuccessListener&lt;? extends R&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called after a successful execution.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution is successful.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onSuccess-net.jodah.failsafe.event.SuccessListener-">onSuccess(SuccessListener&lt;? extends T&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onSuccess-net.jodah.failsafe.event.SuccessListener-">onSuccess(SuccessListener&lt;? extends R&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called after a successful execution.</div>
+<div class="block">Registers the <code>listener</code> to be called when an execution is successful.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onSuccess-T-">onSuccess(T)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onSuccess-R-">onSuccess(R)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
-<div class="block">Called after a successful execution.</div>
+<div class="block">Called when an execution is successful.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onSuccess-T-net.jodah.failsafe.ExecutionContext-">onSuccess(T, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onSuccess-R-net.jodah.failsafe.ExecutionContext-">onSuccess(R, ExecutionContext)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
-<div class="block">Called after a successful execution.</div>
+<div class="block">Called when an execution is successful.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onSuccessAsync-net.jodah.failsafe.event.ContextualSuccessListener-">onSuccessAsync(ContextualSuccessListener&lt;? extends T&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onSuccessAsync-net.jodah.failsafe.event.ContextualSuccessListener-">onSuccessAsync(ContextualSuccessListener&lt;? extends R&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler after a
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler after a
  successful execution.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerBindings.html#onSuccessAsync-net.jodah.failsafe.event.SuccessListener-">onSuccessAsync(SuccessListener&lt;? extends T&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerBindings.html" title="class in net.jodah.failsafe">AsyncListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncListenerConfig.html#onSuccessAsync-net.jodah.failsafe.event.SuccessListener-">onSuccessAsync(SuccessListener&lt;? extends R&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncListenerConfig.html" title="class in net.jodah.failsafe">AsyncListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously on the configured Failsafe executor or Scheduler after a
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler after a
  successful execution.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onSuccessAsync-net.jodah.failsafe.event.ContextualSuccessListener-java.util.concurrent.ExecutorService-">onSuccessAsync(ContextualSuccessListener&lt;? extends T&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onSuccessAsync-net.jodah.failsafe.event.ContextualSuccessListener-java.util.concurrent.ExecutorService-">onSuccessAsync(ContextualSuccessListener&lt;? extends R&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously after a successful execution.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution is successful.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerBindings.html#onSuccessAsync-net.jodah.failsafe.event.SuccessListener-java.util.concurrent.ExecutorService-">onSuccessAsync(SuccessListener&lt;? extends T&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerBindings.html" title="class in net.jodah.failsafe">ListenerBindings</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/ListenerConfig.html#onSuccessAsync-net.jodah.failsafe.event.SuccessListener-java.util.concurrent.ExecutorService-">onSuccessAsync(SuccessListener&lt;? extends R&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ListenerConfig.html" title="class in net.jodah.failsafe">ListenerConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called asynchronously after a successful execution.</div>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution is successful.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/CircuitBreaker.html#open--">open()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a></dt>
 <dd>
@@ -1004,7 +1033,7 @@
 <dd>
 <div class="block">Listens for an execution success.</div>
 </dd>
-<dt><a href="net/jodah/failsafe/SyncFailsafe.html" title="class in net.jodah.failsafe"><span class="typeNameLink">SyncFailsafe</span></a>&lt;<a href="net/jodah/failsafe/SyncFailsafe.html" title="type parameter in SyncFailsafe">L</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
+<dt><a href="net/jodah/failsafe/SyncFailsafe.html" title="class in net.jodah.failsafe"><span class="typeNameLink">SyncFailsafe</span></a>&lt;<a href="net/jodah/failsafe/SyncFailsafe.html" title="type parameter in SyncFailsafe">R</a>&gt; - Class in <a href="net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a></dt>
 <dd>
 <div class="block">Performs synchronous executions according to a <a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe"><code>RetryPolicy</code></a> and <a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe"><code>CircuitBreaker</code></a>.</div>
 </dd>
