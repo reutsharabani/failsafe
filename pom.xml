@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -10,6 +11,7 @@
   <groupId>net.jodah</groupId>
   <artifactId>failsafe</artifactId>
   <version>0.9.1-SNAPSHOT</version>
+  <packaging>bundle</packaging>
   <name>Failsafe</name>
   <url>http://github.com/jhalterman/failsafe/</url>
 
@@ -59,7 +61,7 @@
       <version>0.4.2</version>
       <scope>test</scope>
     </dependency>
-    
+
     <!-- Examples dependencies -->
     <dependency>
       <groupId>io.reactivex</groupId>
@@ -97,6 +99,22 @@
         <configuration>
           <releaseProfiles>release</releaseProfiles>
           <arguments>-Prelease</arguments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.5.3</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Implementation-Title>${project.description}</Implementation-Title>
+            <Implementation-Version>${project.version}</Implementation-Version>
+            <Bundle-Name>Failsafe</Bundle-Name>
+            <Bundle-SymbolicName>net.jodah.failsafe</Bundle-SymbolicName>
+            <Export-Package>net.jodah.failsafe*;version=1.0</Export-Package>
+            <Import-Package>*</Import-Package>
+          </instructions>
         </configuration>
       </plugin>
       <plugin>
