@@ -408,9 +408,9 @@
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/util/concurrent/DefaultScheduledFuture.html#getDelay-java.util.concurrent.TimeUnit-">getDelay(TimeUnit)</a></span> - Method in class net.jodah.failsafe.util.concurrent.<a href="net/jodah/failsafe/util/concurrent/DefaultScheduledFuture.html" title="class in net.jodah.failsafe.util.concurrent">DefaultScheduledFuture</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#getDelayMultiplier--">getDelayMultiplier()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#getDelayFactor--">getDelayFactor()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
 <dd>
-<div class="block">Returns the delay multiplier for backoff retries.</div>
+<div class="block">Returns the delay factor for backoff retries.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/ExecutionContext.html#getElapsedTime--">getElapsedTime()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/ExecutionContext.html" title="class in net.jodah.failsafe">ExecutionContext</a></dt>
 <dd>
@@ -424,6 +424,14 @@
 <dd>
 <div class="block">Gets the ratio of successive failures that must occur when in a closed state in order to open the circuit else
  <code>null</code> if none has been configured.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#getJitter--">getJitter()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
+<dd>
+<div class="block">Returns the jitter, else <code>null</code> if none has been configured.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#getJitterFactor--">getJitterFactor()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
+<dd>
+<div class="block">Returns the jitter factor, else <code>0.0</code> is none has been configured.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#getMaxDelay--">getMaxDelay()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
 <dd>
@@ -1143,13 +1151,13 @@ the order they are declared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#withBackoff-long-long-java.util.concurrent.TimeUnit-">withBackoff(long, long, TimeUnit)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
 <dd>
-<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying successive
- delays by a factor of 2.</div>
+<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying
+ successive delays by a factor of 2.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#withBackoff-long-long-java.util.concurrent.TimeUnit-double-">withBackoff(long, long, TimeUnit, double)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
 <dd>
-<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying successive
- delays by the <code>delayMultiplier</code>.</div>
+<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying
+ successive delays by the <code>delayFactor</code>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/CircuitBreaker.html#withDelay-long-java.util.concurrent.TimeUnit-">withDelay(long, TimeUnit)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a></dt>
 <dd>
@@ -1191,9 +1199,17 @@ the order they are declared.</div>
 <dd>
 <div class="block">Configures the <code>fallback</code> result to be returned if execution fails.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#withJitter-double-">withJitter(double)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
+<dd>
+<div class="block">Sets the <code>jitter</code> to randomly vary retry delays by.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#withJitter-long-java.util.concurrent.TimeUnit-">withJitter(long, TimeUnit)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
+<dd>
+<div class="block">Sets the <code>jitter</code> to randomly vary retry delays by.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-">withMaxDuration(long, TimeUnit)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
 <dd>
-<div class="block">Sets the max duration to perform retries for.</div>
+<div class="block">Sets the max duration to perform retries for, else the execution will be failed.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-">withMaxRetries(int)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></dt>
 <dd>

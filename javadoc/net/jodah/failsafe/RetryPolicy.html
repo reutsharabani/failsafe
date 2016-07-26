@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -231,102 +231,127 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>double</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#getDelayMultiplier--">getDelayMultiplier</a></span>()</code>
-<div class="block">Returns the delay multiplier for backoff retries.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#getDelayFactor--">getDelayFactor</a></span>()</code>
+<div class="block">Returns the delay factor for backoff retries.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="../../../net/jodah/failsafe/util/Duration.html" title="class in net.jodah.failsafe.util">Duration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#getJitter--">getJitter</a></span>()</code>
+<div class="block">Returns the jitter, else <code>null</code> if none has been configured.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#getJitterFactor--">getJitterFactor</a></span>()</code>
+<div class="block">Returns the jitter factor, else <code>0.0</code> is none has been configured.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/util/Duration.html" title="class in net.jodah.failsafe.util">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#getMaxDelay--">getMaxDelay</a></span>()</code>
 <div class="block">Returns the max delay between backoff retries.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/util/Duration.html" title="class in net.jodah.failsafe.util">Duration</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#getMaxDuration--">getMaxDuration</a></span>()</code>
 <div class="block">Returns the max duration to perform retries for.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#getMaxRetries--">getMaxRetries</a></span>()</code>
 <div class="block">Returns the max retries.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#retryIf-net.jodah.failsafe.function.BiPredicate-">retryIf</a></span>(<a href="../../../net/jodah/failsafe/function/BiPredicate.html" title="interface in net.jodah.failsafe.function">BiPredicate</a>&lt;T,? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;completionPredicate)</code>
 <div class="block">Specifies that a retry should occur if the <code>completionPredicate</code> matches the completion result and the retry
  policy is not exceeded.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#retryIf-net.jodah.failsafe.function.Predicate-">retryIf</a></span>(<a href="../../../net/jodah/failsafe/function/Predicate.html" title="interface in net.jodah.failsafe.function">Predicate</a>&lt;T&gt;&nbsp;resultPredicate)</code>
 <div class="block">Specifies that a retry should occur if the <code>resultPredicate</code> matches the result and the retry policy is not
  exceeded.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#retryOn-java.lang.Class...-">retryOn</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;...&nbsp;failures)</code>
 <div class="block">Specifies the failures to retry on.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#retryOn-java.util.List-">retryOn</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&gt;&nbsp;failures)</code>
 <div class="block">Specifies the failures to retry on.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#retryOn-net.jodah.failsafe.function.Predicate-">retryOn</a></span>(<a href="../../../net/jodah/failsafe/function/Predicate.html" title="interface in net.jodah.failsafe.function">Predicate</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;failurePredicate)</code>
 <div class="block">Specifies that a retry should occur if the <code>failurePredicate</code> matches the failure and the retry policy is not
  exceeded.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#retryWhen-java.lang.Object-">retryWhen</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;result)</code>
 <div class="block">Specifies that a retry should occur if the execution result matches the <code>result</code> and the retry policy is not
  exceeded.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#withBackoff-long-long-java.util.concurrent.TimeUnit-">withBackoff</a></span>(long&nbsp;delay,
            long&nbsp;maxDelay,
            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit)</code>
-<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying successive
- delays by a factor of 2.</div>
+<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying
+ successive delays by a factor of 2.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#withBackoff-long-long-java.util.concurrent.TimeUnit-double-">withBackoff</a></span>(long&nbsp;delay,
            long&nbsp;maxDelay,
            <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit,
-           double&nbsp;delayMultiplier)</code>
-<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying successive
- delays by the <code>delayMultiplier</code>.</div>
+           double&nbsp;delayFactor)</code>
+<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying
+ successive delays by the <code>delayFactor</code>.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#withDelay-long-java.util.concurrent.TimeUnit-">withDelay</a></span>(long&nbsp;delay,
          <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit)</code>
 <div class="block">Sets the <code>delay</code> between retries.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
+<td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#withJitter-double-">withJitter</a></span>(double&nbsp;jitterFactor)</code>
+<div class="block">Sets the <code>jitter</code> to randomly vary retry delays by.</div>
+</td>
+</tr>
+<tr id="i27" class="rowColor">
+<td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#withJitter-long-java.util.concurrent.TimeUnit-">withJitter</a></span>(long&nbsp;jitter,
+          <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit)</code>
+<div class="block">Sets the <code>jitter</code> to randomly vary retry delays by.</div>
+</td>
+</tr>
+<tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-">withMaxDuration</a></span>(long&nbsp;maxDuration,
                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit)</code>
-<div class="block">Sets the max duration to perform retries for.</div>
+<div class="block">Sets the max duration to perform retries for, else the execution will be failed.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-">withMaxRetries</a></span>(int&nbsp;maxRetries)</code>
 <div class="block">Sets the max number of retries to perform.</div>
@@ -548,17 +573,45 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 </dl>
 </li>
 </ul>
-<a name="getDelayMultiplier--">
+<a name="getDelayFactor--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getDelayMultiplier</h4>
-<pre>public&nbsp;double&nbsp;getDelayMultiplier()</pre>
-<div class="block">Returns the delay multiplier for backoff retries.</div>
+<h4>getDelayFactor</h4>
+<pre>public&nbsp;double&nbsp;getDelayFactor()</pre>
+<div class="block">Returns the delay factor for backoff retries.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../net/jodah/failsafe/RetryPolicy.html#withBackoff-long-long-java.util.concurrent.TimeUnit-double-"><code>withBackoff(long, long, TimeUnit, double)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="getJitter--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getJitter</h4>
+<pre>public&nbsp;<a href="../../../net/jodah/failsafe/util/Duration.html" title="class in net.jodah.failsafe.util">Duration</a>&nbsp;getJitter()</pre>
+<div class="block">Returns the jitter, else <code>null</code> if none has been configured.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../net/jodah/failsafe/RetryPolicy.html#withJitter-long-java.util.concurrent.TimeUnit-"><code>withJitter(long, TimeUnit)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="getJitterFactor--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getJitterFactor</h4>
+<pre>public&nbsp;double&nbsp;getJitterFactor()</pre>
+<div class="block">Returns the jitter factor, else <code>0.0</code> is none has been configured.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../net/jodah/failsafe/RetryPolicy.html#withJitter-double-"><code>withJitter(double)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -699,11 +752,12 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>public&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;withBackoff(long&nbsp;delay,
                                long&nbsp;maxDelay,
                                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit)</pre>
-<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying successive
- delays by a factor of 2.</div>
+<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying
+ successive delays by a factor of 2.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>timeUnit</code> is null</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if <code>delay</code> is >= the <a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>maxDuration</code></a></dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if <code>delay</code> is <= 0 or <code>delay</code> is >= <code>maxDelay</code></dd>
 </dl>
 </li>
@@ -717,15 +771,15 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>public&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;withBackoff(long&nbsp;delay,
                                long&nbsp;maxDelay,
                                <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit,
-                               double&nbsp;delayMultiplier)</pre>
-<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying successive
- delays by the <code>delayMultiplier</code>.</div>
+                               double&nbsp;delayFactor)</pre>
+<div class="block">Sets the <code>delay</code> between retries, exponentially backing off to the <code>maxDelay</code> and multiplying
+ successive delays by the <code>delayFactor</code>.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>timeUnit</code> is null</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if <code>delay</code> is >= the maxDuration</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if <code>delay</code> is >= the <a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>maxDuration</code></a></dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if <code>delay</code> <= 0, <code>delay</code> is >= <code>maxDelay</code>, or the
-           <code>delayMultiplier</code> is <= 1</dd>
+           <code>delayFactor</code> is <= 1</dd>
 </dl>
 </li>
 </ul>
@@ -742,7 +796,51 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>timeUnit</code> is null</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if <code>delay</code> <= 0</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if <code>delay</code> is >= the maxDuration</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if <code>delay</code> is >= the <a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>maxDuration</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="withJitter-double-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withJitter</h4>
+<pre>public&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;withJitter(double&nbsp;jitterFactor)</pre>
+<div class="block">Sets the <code>jitter</code> to randomly vary retry delays by. For each retry delay, a random portion of the
+ <code>jitterFactor</code> multiplied by the delay with be added or subtracted to the delay. For example: a retry delay
+ of 100 milliseconds and a <code>jitterFactor</code> of .25 will result in a random retry delay between 75 and 125
+ milliseconds.
+ <p>
+ Jitter should be combined with <a href="../../../net/jodah/failsafe/RetryPolicy.html#withDelay-long-java.util.concurrent.TimeUnit-"><code>fixed</code></a> or
+ <a href="../../../net/jodah/failsafe/RetryPolicy.html#withBackoff-long-long-java.util.concurrent.TimeUnit-"><code>exponential backoff</code></a> delays.</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if <code>duration</code> is <= 0 or > 1</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if no delay has been configured or <a href="../../../net/jodah/failsafe/RetryPolicy.html#withJitter-long-java.util.concurrent.TimeUnit-"><code>withJitter(long, TimeUnit)</code></a> has already
+           been called</dd>
+</dl>
+</li>
+</ul>
+<a name="withJitter-long-java.util.concurrent.TimeUnit-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withJitter</h4>
+<pre>public&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;withJitter(long&nbsp;jitter,
+                              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit)</pre>
+<div class="block">Sets the <code>jitter</code> to randomly vary retry delays by. For each retry delay, a random portion of the
+ <code>jitter</code> will be added or subtracted to the delay. For example: a <code>jitter</code> of 100 milliseconds will
+ randomly add between -100 and 100 milliseconds to each retry delay.
+ <p>
+ Jitter should be combined with <a href="../../../net/jodah/failsafe/RetryPolicy.html#withDelay-long-java.util.concurrent.TimeUnit-"><code>fixed</code></a> or
+ <a href="../../../net/jodah/failsafe/RetryPolicy.html#withBackoff-long-long-java.util.concurrent.TimeUnit-"><code>exponential backoff</code></a> delays.</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>timeUnit</code> is null</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if <code>jitter</code> is <= 0</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if no delay has been configured or <code>#withJitter(long)</code> has already been called</dd>
 </dl>
 </li>
 </ul>
@@ -754,11 +852,11 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withMaxDuration</h4>
 <pre>public&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;withMaxDuration(long&nbsp;maxDuration,
                                    <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit)</pre>
-<div class="block">Sets the max duration to perform retries for.</div>
+<div class="block">Sets the max duration to perform retries for, else the execution will be failed.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>timeUnit</code> is null</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if <code>maxDuration</code> is <= the delay</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</a></code> - if <code>maxDuration</code> is <= the <a href="../../../net/jodah/failsafe/RetryPolicy.html#withDelay-long-java.util.concurrent.TimeUnit-"><code>delay</code></a></dd>
 </dl>
 </li>
 </ul>
