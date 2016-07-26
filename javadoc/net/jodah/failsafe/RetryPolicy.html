@@ -334,7 +334,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <tr id="i26" class="altColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/RetryPolicy.html#withJitter-double-">withJitter</a></span>(double&nbsp;jitterFactor)</code>
-<div class="block">Sets the <code>jitter</code> to randomly vary retry delays by.</div>
+<div class="block">Sets the <code>jitterFactor</code> to randomly vary retry delays by.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
@@ -650,7 +650,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>getMaxRetries</h4>
 <pre>public&nbsp;int&nbsp;getMaxRetries()</pre>
-<div class="block">Returns the max retries. Defaults to -1, which retries forever.</div>
+<div class="block">Returns the max retries. Defaults to <code>100</code>, which retries forever.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>withMaxRetries(int)</code></a></dd>
@@ -807,10 +807,10 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>withJitter</h4>
 <pre>public&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;withJitter(double&nbsp;jitterFactor)</pre>
-<div class="block">Sets the <code>jitter</code> to randomly vary retry delays by. For each retry delay, a random portion of the
- <code>jitterFactor</code> multiplied by the delay with be added or subtracted to the delay. For example: a retry delay
- of 100 milliseconds and a <code>jitterFactor</code> of .25 will result in a random retry delay between 75 and 125
- milliseconds.
+<div class="block">Sets the <code>jitterFactor</code> to randomly vary retry delays by. For each retry delay, a random portion of the delay
+ multiplied by the <code>jitterFactor</code> will be added or subtracted to the delay. For example: a retry delay of
+ <code>100</code> milliseconds and a <code>jitterFactor</code> of <code>.25</code> will result in a random retry delay between
+ <code>75</code> and <code>125</code> milliseconds.
  <p>
  Jitter should be combined with <a href="../../../net/jodah/failsafe/RetryPolicy.html#withDelay-long-java.util.concurrent.TimeUnit-"><code>fixed</code></a> or
  <a href="../../../net/jodah/failsafe/RetryPolicy.html#withBackoff-long-long-java.util.concurrent.TimeUnit-"><code>exponential backoff</code></a> delays.</div>
@@ -831,8 +831,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <pre>public&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;withJitter(long&nbsp;jitter,
                               <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit)</pre>
 <div class="block">Sets the <code>jitter</code> to randomly vary retry delays by. For each retry delay, a random portion of the
- <code>jitter</code> will be added or subtracted to the delay. For example: a <code>jitter</code> of 100 milliseconds will
- randomly add between -100 and 100 milliseconds to each retry delay.
+ <code>jitter</code> will be added or subtracted to the delay. For example: a <code>jitter</code> of <code>100</code> milliseconds
+ will randomly add between <code>-100</code> and <code>100</code> milliseconds to each retry delay.
  <p>
  Jitter should be combined with <a href="../../../net/jodah/failsafe/RetryPolicy.html#withDelay-long-java.util.concurrent.TimeUnit-"><code>fixed</code></a> or
  <a href="../../../net/jodah/failsafe/RetryPolicy.html#withBackoff-long-long-java.util.concurrent.TimeUnit-"><code>exponential backoff</code></a> delays.</div>
@@ -867,7 +867,7 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>withMaxRetries</h4>
 <pre>public&nbsp;<a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;withMaxRetries(int&nbsp;maxRetries)</pre>
-<div class="block">Sets the max number of retries to perform. -1 indicates to retry forever.</div>
+<div class="block">Sets the max number of retries to perform. <code>-1</code> indicates to retry forever.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if <code>maxRetries</code> < -1</dd>
