@@ -105,53 +105,17 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">AsyncFailsafe.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html#with-net.jodah.failsafe.CircuitBreaker-">with</a></span>(<a href="../../../../net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a>&nbsp;circuitBreaker)</code>
-<div class="block">Configures the <code>circuitBreaker</code> to be used to control the rate of event execution.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;T&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">AsyncFailsafe.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html#with-net.jodah.failsafe.Listeners-">with</a></span>(<a href="../../../../net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a>&lt;T&gt;&nbsp;listeners)</code>
-<div class="block">Configures the <code>listeners</code> to be called as execution events occur.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">AsyncFailsafe.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html#with-net.jodah.failsafe.RetryPolicy-">with</a></span>(<a href="../../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe">RetryPolicy</a>&nbsp;retryPolicy)</code>
-<div class="block">Configures the <code>retryPolicy</code> to be used for retrying failed executions.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../../net/jodah/failsafe/SyncFailsafe.html" title="type parameter in SyncFailsafe">R</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">SyncFailsafe.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/SyncFailsafe.html#with-java.util.concurrent.ScheduledExecutorService-">with</a></span>(<a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ScheduledExecutorService</a>&nbsp;executor)</code>
 <div class="block">Creates and returns a new AsyncFailsafe instance that will perform executions and retries asynchronously via the
  <code>executor</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../../net/jodah/failsafe/SyncFailsafe.html" title="type parameter in SyncFailsafe">R</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">SyncFailsafe.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/SyncFailsafe.html#with-net.jodah.failsafe.util.concurrent.Scheduler-">with</a></span>(<a href="../../../../net/jodah/failsafe/util/concurrent/Scheduler.html" title="interface in net.jodah.failsafe.util.concurrent">Scheduler</a>&nbsp;scheduler)</code>
 <div class="block">Creates and returns a new AsyncFailsafe instance that will perform executions and retries asynchronously via the
  <code>scheduler</code>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">AsyncFailsafe.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html#withFallback-net.jodah.failsafe.function.BiFunction-">withFallback</a></span>(<a href="../../../../net/jodah/failsafe/function/BiFunction.html" title="interface in net.jodah.failsafe.function">BiFunction</a>&lt;? extends <a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>,? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>,? extends <a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>&gt;&nbsp;fallback)</code>
-<div class="block">Configures the <code>fallback</code> action to be executed if execution fails.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">AsyncFailsafe.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html#withFallback-net.jodah.failsafe.function.Function-">withFallback</a></span>(<a href="../../../../net/jodah/failsafe/function/Function.html" title="interface in net.jodah.failsafe.function">Function</a>&lt;? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>,? extends <a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>&gt;&nbsp;fallback)</code>
-<div class="block">Configures the <code>fallback</code> action to be executed if execution fails.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="class in net.jodah.failsafe">AsyncFailsafe</a>&lt;<a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">AsyncFailsafe.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/AsyncFailsafe.html#withFallback-R-">withFallback</a></span>(<a href="../../../../net/jodah/failsafe/AsyncFailsafe.html" title="type parameter in AsyncFailsafe">R</a>&nbsp;fallback)</code>
-<div class="block">Configures the <code>fallback</code> result to be returned if execution fails.</div>
 </td>
 </tr>
 </tbody>

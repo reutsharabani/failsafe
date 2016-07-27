@@ -186,6 +186,35 @@
 </tr>
 </tbody>
 </table>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Method parameters in <a href="../../../../net/jodah/failsafe/package-summary.html">net.jodah.failsafe</a> with type arguments of type <a href="../../../../net/jodah/failsafe/ExecutionContext.html" title="class in net.jodah.failsafe">ExecutionContext</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../net/jodah/failsafe/FailsafeConfig.html" title="type parameter in FailsafeConfig">F</a></code></td>
+<td class="colLast"><span class="typeNameLabel">FailsafeConfig.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/FailsafeConfig.html#onSuccess-net.jodah.failsafe.function.CheckedBiConsumer-">onSuccess</a></span>(<a href="../../../../net/jodah/failsafe/function/CheckedBiConsumer.html" title="interface in net.jodah.failsafe.function">CheckedBiConsumer</a>&lt;? extends <a href="../../../../net/jodah/failsafe/FailsafeConfig.html" title="type parameter in FailsafeConfig">R</a>,<a href="../../../../net/jodah/failsafe/ExecutionContext.html" title="class in net.jodah.failsafe">ExecutionContext</a>&gt;&nbsp;listener)</code>
+<div class="block">Registers the <code>listener</code> to be called when an execution is successful.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../net/jodah/failsafe/AsyncFailsafeConfig.html" title="type parameter in AsyncFailsafeConfig">F</a></code></td>
+<td class="colLast"><span class="typeNameLabel">AsyncFailsafeConfig.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/AsyncFailsafeConfig.html#onSuccessAsync-net.jodah.failsafe.function.CheckedBiConsumer-">onSuccessAsync</a></span>(<a href="../../../../net/jodah/failsafe/function/CheckedBiConsumer.html" title="interface in net.jodah.failsafe.function">CheckedBiConsumer</a>&lt;? extends <a href="../../../../net/jodah/failsafe/AsyncFailsafeConfig.html" title="type parameter in AsyncFailsafeConfig">R</a>,<a href="../../../../net/jodah/failsafe/ExecutionContext.html" title="class in net.jodah.failsafe">ExecutionContext</a>&gt;&nbsp;listener)</code>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on Failsafe's configured executor or Scheduler after a
+ successful execution.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../net/jodah/failsafe/FailsafeConfig.html" title="type parameter in FailsafeConfig">F</a></code></td>
+<td class="colLast"><span class="typeNameLabel">FailsafeConfig.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/FailsafeConfig.html#onSuccessAsync-net.jodah.failsafe.function.CheckedBiConsumer-java.util.concurrent.ExecutorService-">onSuccessAsync</a></span>(<a href="../../../../net/jodah/failsafe/function/CheckedBiConsumer.html" title="interface in net.jodah.failsafe.function">CheckedBiConsumer</a>&lt;? extends <a href="../../../../net/jodah/failsafe/FailsafeConfig.html" title="type parameter in FailsafeConfig">R</a>,<a href="../../../../net/jodah/failsafe/ExecutionContext.html" title="class in net.jodah.failsafe">ExecutionContext</a>&gt;&nbsp;listener,
+              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor)</code>
+<div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution is successful.</div>
+</td>
+</tr>
+</tbody>
+</table>
 </li>
 <li class="blockList"><a name="net.jodah.failsafe.event">
 <!--   -->
@@ -204,13 +233,6 @@
         <a href="../../../../net/jodah/failsafe/event/ContextualResultListener.html" title="type parameter in ContextualResultListener">F</a>&nbsp;failure,
         <a href="../../../../net/jodah/failsafe/ExecutionContext.html" title="class in net.jodah.failsafe">ExecutionContext</a>&nbsp;context)</code>
 <div class="block">Handles an execution result.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ContextualSuccessListener.</span><code><span class="memberNameLink"><a href="../../../../net/jodah/failsafe/event/ContextualSuccessListener.html#onSuccess-R-net.jodah.failsafe.ExecutionContext-">onSuccess</a></span>(<a href="../../../../net/jodah/failsafe/event/ContextualSuccessListener.html" title="type parameter in ContextualSuccessListener">R</a>&nbsp;result,
-         <a href="../../../../net/jodah/failsafe/ExecutionContext.html" title="class in net.jodah.failsafe">ExecutionContext</a>&nbsp;context)</code>
-<div class="block">Handles the successful completion of a call.</div>
 </td>
 </tr>
 </tbody>

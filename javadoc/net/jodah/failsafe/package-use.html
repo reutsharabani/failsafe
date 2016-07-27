@@ -114,13 +114,14 @@
 <tbody>
 <tr class="altColor">
 <td class="colOne"><a href="../../../net/jodah/failsafe/class-use/AsyncFailsafe.html#net.jodah.failsafe">AsyncFailsafe</a>
-<div class="block">Performs asynchronous executions according to a <a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe"><code>RetryPolicy</code></a> and <a href="../../../net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe"><code>CircuitBreaker</code></a>.</div>
+<div class="block">Performs asynchronous executions with failures handled according to a configured <a href="../../../net/jodah/failsafe/FailsafeConfig.html#with-net.jodah.failsafe.RetryPolicy-"><code>retry
+ policy</code></a>, <a href="../../../net/jodah/failsafe/FailsafeConfig.html#with-net.jodah.failsafe.CircuitBreaker-"><code>circuit breaker</code></a> and
+ <a href="../../../net/jodah/failsafe/FailsafeConfig.html#withFallback-net.jodah.failsafe.function.CheckedBiFunction-"><code>fallback</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../net/jodah/failsafe/class-use/AsyncListenerConfig.html#net.jodah.failsafe">AsyncListenerConfig</a>
-<div class="block">Failsafe execution event listeners that are called asynchronously on the <a href="../../../net/jodah/failsafe/util/concurrent/Scheduler.html" title="interface in net.jodah.failsafe.util.concurrent"><code>Scheduler</code></a> or
- <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ScheduledExecutorService</code></a> associated with the Failsafe call.</div>
+<td class="colOne"><a href="../../../net/jodah/failsafe/class-use/AsyncFailsafeConfig.html#net.jodah.failsafe">AsyncFailsafeConfig</a>
+<div class="block">Async Failsafe configuration.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -139,13 +140,13 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../net/jodah/failsafe/class-use/FailsafeFuture.html#net.jodah.failsafe">FailsafeFuture</a>
-<div class="block">The future result of an asynchronous Failsafe execution.</div>
+<td class="colOne"><a href="../../../net/jodah/failsafe/class-use/FailsafeConfig.html#net.jodah.failsafe">FailsafeConfig</a>
+<div class="block">Failsafe configuration.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><a href="../../../net/jodah/failsafe/class-use/ListenerConfig.html#net.jodah.failsafe">ListenerConfig</a>
-<div class="block">Listener configuration.</div>
+<td class="colOne"><a href="../../../net/jodah/failsafe/class-use/FailsafeFuture.html#net.jodah.failsafe">FailsafeFuture</a>
+<div class="block">The future result of an asynchronous Failsafe execution.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -160,7 +161,9 @@
 </tr>
 <tr class="rowColor">
 <td class="colOne"><a href="../../../net/jodah/failsafe/class-use/SyncFailsafe.html#net.jodah.failsafe">SyncFailsafe</a>
-<div class="block">Performs synchronous executions according to a <a href="../../../net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe"><code>RetryPolicy</code></a> and <a href="../../../net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe"><code>CircuitBreaker</code></a>.</div>
+<div class="block">Performs synchronous executions with failures handled according to a configured <a href="../../../net/jodah/failsafe/FailsafeConfig.html#with-net.jodah.failsafe.RetryPolicy-"><code>retry
+ policy</code></a>, <a href="../../../net/jodah/failsafe/FailsafeConfig.html#with-net.jodah.failsafe.CircuitBreaker-"><code>circuit breaker</code></a> and
+ <code>fallback</code>.</div>
 </td>
 </tr>
 </tbody>
