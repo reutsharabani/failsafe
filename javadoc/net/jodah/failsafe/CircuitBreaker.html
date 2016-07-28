@@ -833,7 +833,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>withTimeout</h4>
 <pre>public&nbsp;<a href="../../../net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a>&nbsp;withTimeout(long&nbsp;timeout,
                                   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;timeUnit)</pre>
-<div class="block">Sets the <code>timeout</code> for executions. Executions that exceed this timeout are recorded as failures.</div>
+<div class="block">Sets the <code>timeout</code> for executions. Executions that exceed this timeout are not interrupted, but are recorded
+ as failures once they naturally complete.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>timeUnit</code> is null</dd>
