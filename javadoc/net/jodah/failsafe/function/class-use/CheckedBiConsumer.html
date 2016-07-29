@@ -188,7 +188,7 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../net/jodah/failsafe/FailsafeConfig.html" title="type parameter in FailsafeConfig">F</a></code></td>
 <td class="colLast"><span class="typeNameLabel">FailsafeConfig.</span><code><span class="memberNameLink"><a href="../../../../../net/jodah/failsafe/FailsafeConfig.html#onRetriesExceeded-net.jodah.failsafe.function.CheckedBiConsumer-">onRetriesExceeded</a></span>(<a href="../../../../../net/jodah/failsafe/function/CheckedBiConsumer.html" title="interface in net.jodah.failsafe.function">CheckedBiConsumer</a>&lt;? extends <a href="../../../../../net/jodah/failsafe/FailsafeConfig.html" title="type parameter in FailsafeConfig">R</a>,? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;listener)</code>
-<div class="block">Registers the <code>listener</code> to be called when an execution fails and the max retry attempts or duration are
+<div class="block">Registers the <code>listener</code> to be called when an execution fails and the <a href="../../../../../net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>max retry attempts</code></a> or <a href="../../../../../net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>max duration</code></a> are
  exceeded.</div>
 </td>
 </tr>
@@ -204,7 +204,8 @@
 <td class="colLast"><span class="typeNameLabel">FailsafeConfig.</span><code><span class="memberNameLink"><a href="../../../../../net/jodah/failsafe/FailsafeConfig.html#onRetriesExceededAsync-net.jodah.failsafe.function.CheckedBiConsumer-java.util.concurrent.ExecutorService-">onRetriesExceededAsync</a></span>(<a href="../../../../../net/jodah/failsafe/function/CheckedBiConsumer.html" title="interface in net.jodah.failsafe.function">CheckedBiConsumer</a>&lt;? extends <a href="../../../../../net/jodah/failsafe/FailsafeConfig.html" title="type parameter in FailsafeConfig">R</a>,? extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&gt;&nbsp;listener,
                       <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;executor)</code>
 <div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution fails and the
- max retry attempts or duration are exceeded.</div>
+ <a href="../../../../../net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>max retry attempts</code></a> or
+ <a href="../../../../../net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>max duration</code></a> are exceeded.</div>
 </td>
 </tr>
 <tr class="rowColor">

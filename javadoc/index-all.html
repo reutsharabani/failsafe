@@ -767,17 +767,18 @@
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeConfig.html#onRetriesExceeded-net.jodah.failsafe.function.CheckedBiConsumer-">onRetriesExceeded(CheckedBiConsumer&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeConfig.html" title="class in net.jodah.failsafe">FailsafeConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called when an execution fails and the max retry attempts or duration are
+<div class="block">Registers the <code>listener</code> to be called when an execution fails and the <a href="net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>max retry attempts</code></a> or <a href="net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>max duration</code></a> are
  exceeded.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeConfig.html#onRetriesExceeded-net.jodah.failsafe.function.CheckedConsumer-">onRetriesExceeded(CheckedConsumer&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeConfig.html" title="class in net.jodah.failsafe">FailsafeConfig</a></dt>
 <dd>
-<div class="block">Registers the <code>listener</code> to be called when an execution fails and the max retry attempts or duration are
+<div class="block">Registers the <code>listener</code> to be called when an execution fails and the <a href="net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>max retry attempts</code></a> or <a href="net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>max duration</code></a> are
  exceeded.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/Listeners.html#onRetriesExceeded-R-java.lang.Throwable-">onRetriesExceeded(R, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Listeners.html" title="class in net.jodah.failsafe">Listeners</a></dt>
 <dd>
-<div class="block">Called when an execution fails and retries are exceeded.</div>
+<div class="block">Called when an execution fails and the <a href="net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>max retry attempts</code></a> or
+ <a href="net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>max duration</code></a> are exceeded.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/AsyncFailsafeConfig.html#onRetriesExceededAsync-net.jodah.failsafe.function.CheckedConsumer-">onRetriesExceededAsync(CheckedConsumer&lt;? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/AsyncFailsafeConfig.html" title="class in net.jodah.failsafe">AsyncFailsafeConfig</a></dt>
 <dd>
@@ -792,12 +793,14 @@
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeConfig.html#onRetriesExceededAsync-net.jodah.failsafe.function.CheckedBiConsumer-java.util.concurrent.ExecutorService-">onRetriesExceededAsync(CheckedBiConsumer&lt;? extends R, ? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeConfig.html" title="class in net.jodah.failsafe">FailsafeConfig</a></dt>
 <dd>
 <div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution fails and the
- max retry attempts or duration are exceeded.</div>
+ <a href="net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>max retry attempts</code></a> or
+ <a href="net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>max duration</code></a> are exceeded.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeConfig.html#onRetriesExceededAsync-net.jodah.failsafe.function.CheckedConsumer-java.util.concurrent.ExecutorService-">onRetriesExceededAsync(CheckedConsumer&lt;? extends Throwable&gt;, ExecutorService)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeConfig.html" title="class in net.jodah.failsafe">FailsafeConfig</a></dt>
 <dd>
 <div class="block">Registers the <code>listener</code> to be called asynchronously on the <code>executor</code> when an execution fails and the
- max retry attempts or duration are exceeded.</div>
+ <a href="net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>max retry attempts</code></a> or
+ <a href="net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>max duration</code></a> are exceeded.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeConfig.html#onRetry-net.jodah.failsafe.function.CheckedBiConsumer-">onRetry(CheckedBiConsumer&lt;? extends R, ? extends Throwable&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeConfig.html" title="class in net.jodah.failsafe">FailsafeConfig</a></dt>
 <dd>

@@ -215,7 +215,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/Listeners.html#onRetriesExceeded-R-java.lang.Throwable-">onRetriesExceeded</a></span>(<a href="../../../net/jodah/failsafe/Listeners.html" title="type parameter in Listeners">R</a>&nbsp;result,
                  <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;failure)</code>
-<div class="block">Called when an execution fails and retries are exceeded.</div>
+<div class="block">Called when an execution fails and the <a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>max retry attempts</code></a> or
+ <a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>max duration</code></a> are exceeded.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
@@ -403,7 +404,8 @@ extends <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?
 <h4>onRetriesExceeded</h4>
 <pre>public&nbsp;void&nbsp;onRetriesExceeded(<a href="../../../net/jodah/failsafe/Listeners.html" title="type parameter in Listeners">R</a>&nbsp;result,
                               <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;failure)</pre>
-<div class="block">Called when an execution fails and retries are exceeded.</div>
+<div class="block">Called when an execution fails and the <a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxRetries-int-"><code>max retry attempts</code></a> or
+ <a href="../../../net/jodah/failsafe/RetryPolicy.html#withMaxDuration-long-java.util.concurrent.TimeUnit-"><code>max duration</code></a> are exceeded.</div>
 </li>
 </ul>
 <a name="onRetry-java.lang.Object-java.lang.Throwable-">
