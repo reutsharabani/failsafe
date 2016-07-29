@@ -141,24 +141,35 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/FailsafeFuture.html#cancel-boolean-">cancel</a></span>(boolean&nbsp;mayInterruptIfRunning)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/FailsafeFuture.html#cancel-boolean-">cancel</a></span>(boolean&nbsp;mayInterruptIfRunning)</code>
+<div class="block">Attempts to cancel this execution.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/FailsafeFuture.html" title="type parameter in FailsafeFuture">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/FailsafeFuture.html#get--">get</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/FailsafeFuture.html#get--">get</a></span>()</code>
+<div class="block">Waits if necessary for the execution to complete, and then returns its result.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../net/jodah/failsafe/FailsafeFuture.html" title="type parameter in FailsafeFuture">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/FailsafeFuture.html#get-long-java.util.concurrent.TimeUnit-">get</a></span>(long&nbsp;timeout,
-   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>&nbsp;</td>
+   <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html?is-external=true" title="class or interface in java.util.concurrent">TimeUnit</a>&nbsp;unit)</code>
+<div class="block">Waits if necessary for at most the given time for the execution to complete, and then returns its result, if
+ available.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/FailsafeFuture.html#isCancelled--">isCancelled</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/FailsafeFuture.html#isCancelled--">isCancelled</a></span>()</code>
+<div class="block">Returns <code>true</code> if this execution was cancelled before it completed normally.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/FailsafeFuture.html#isDone--">isDone</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../net/jodah/failsafe/FailsafeFuture.html#isDone--">isDone</a></span>()</code>
+<div class="block">Returns <code>true</code> if this execution completed.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -189,9 +200,24 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <li class="blockList">
 <h4>cancel</h4>
 <pre>public&nbsp;boolean&nbsp;cancel(boolean&nbsp;mayInterruptIfRunning)</pre>
+<div class="block">Attempts to cancel this execution. This attempt will fail if the execution has already completed, has already been
+ cancelled, or could not be cancelled for some other reason. If successful, and this execution has not started when
+ <code>cancel</code> is called, this execution should never run. If the execution has already started, then the
+ <code>mayInterruptIfRunning</code> parameter determines whether the thread executing this task should be interrupted in
+ an attempt to stop the execution.
+
+ <p>
+ After this method returns, subsequent calls to <a href="../../../net/jodah/failsafe/FailsafeFuture.html#isDone--"><code>isDone()</code></a> will always return <code>true</code>. Subsequent calls to
+ <a href="../../../net/jodah/failsafe/FailsafeFuture.html#isCancelled--"><code>isCancelled()</code></a> will always return <code>true</code> if this method returned <code>true</code>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#cancel-boolean-" title="class or interface in java.util.concurrent">cancel</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="../../../net/jodah/failsafe/FailsafeFuture.html" title="type parameter in FailsafeFuture">T</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>mayInterruptIfRunning</code> - <code>true</code> if the thread executing this execution should be interrupted; otherwise,
+          in-progress executions are allowed to complete</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>false</code> if the execution could not be cancelled, typically because it has already completed normally;
+         <code>true</code> otherwise</dd>
 </dl>
 </li>
 </ul>
@@ -204,12 +230,16 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <pre>public&nbsp;<a href="../../../net/jodah/failsafe/FailsafeFuture.html" title="type parameter in FailsafeFuture">T</a>&nbsp;get()
       throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a>,
              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></pre>
+<div class="block">Waits if necessary for the execution to complete, and then returns its result.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#get--" title="class or interface in java.util.concurrent">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="../../../net/jodah/failsafe/FailsafeFuture.html" title="type parameter in FailsafeFuture">T</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the execution result</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CancellationException.html?is-external=true" title="class or interface in java.util.concurrent">CancellationException</a></code> - if the execution was cancelled</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></code> - if the execution threw an exception</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the current thread was interrupted while waiting</dd>
 </dl>
 </li>
 </ul>
@@ -224,15 +254,23 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
       throws <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a>,
              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a>,
              <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeoutException.html?is-external=true" title="class or interface in java.util.concurrent">TimeoutException</a></pre>
+<div class="block">Waits if necessary for at most the given time for the execution to complete, and then returns its result, if
+ available.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#get-long-java.util.concurrent.TimeUnit-" title="class or interface in java.util.concurrent">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="../../../net/jodah/failsafe/FailsafeFuture.html" title="type parameter in FailsafeFuture">T</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>timeout</code> - the maximum time to wait</dd>
+<dd><code>unit</code> - the time unit of the timeout argument</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the execution result</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CancellationException.html?is-external=true" title="class or interface in java.util.concurrent">CancellationException</a></code> - if the execution was cancelled</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></code> - if the execution threw an exception</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - if the current thread was interrupted while waiting</dd>
+<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeoutException.html?is-external=true" title="class or interface in java.util.concurrent">TimeoutException</a></code> - if the wait timed out</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if <code>unit</code> is null</dd>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if <code>timeout</code> is < 0</dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></code></dd>
-<dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeoutException.html?is-external=true" title="class or interface in java.util.concurrent">TimeoutException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -243,9 +281,12 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <li class="blockList">
 <h4>isCancelled</h4>
 <pre>public&nbsp;boolean&nbsp;isCancelled()</pre>
+<div class="block">Returns <code>true</code> if this execution was cancelled before it completed normally.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#isCancelled--" title="class or interface in java.util.concurrent">isCancelled</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="../../../net/jodah/failsafe/FailsafeFuture.html" title="type parameter in FailsafeFuture">T</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>true</code> if this execution was cancelled before it completed</dd>
 </dl>
 </li>
 </ul>
@@ -256,9 +297,15 @@ implements <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurren
 <li class="blockList">
 <h4>isDone</h4>
 <pre>public&nbsp;boolean&nbsp;isDone()</pre>
+<div class="block">Returns <code>true</code> if this execution completed.
+
+ Completion may be due to normal termination, an exception, or cancellation -- in all of these cases, this method
+ will return <code>true</code>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true#isDone--" title="class or interface in java.util.concurrent">isDone</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent">Future</a>&lt;<a href="../../../net/jodah/failsafe/FailsafeFuture.html" title="type parameter in FailsafeFuture">T</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>true</code> if this execution completed</dd>
 </dl>
 </li>
 </ul>

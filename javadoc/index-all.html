@@ -160,7 +160,9 @@
 <div class="block">Returns whether an execution result can be aborted given the configured abort conditions.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeFuture.html#cancel-boolean-">cancel(boolean)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeFuture.html" title="class in net.jodah.failsafe">FailsafeFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Attempts to cancel this execution.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/util/concurrent/DefaultScheduledFuture.html#cancel-boolean-">cancel(boolean)</a></span> - Method in class net.jodah.failsafe.util.concurrent.<a href="net/jodah/failsafe/util/concurrent/DefaultScheduledFuture.html" title="class in net.jodah.failsafe.util.concurrent">DefaultScheduledFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/Execution.html#canRetryFor-java.lang.Object-">canRetryFor(Object)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/Execution.html" title="class in net.jodah.failsafe">Execution</a></dt>
@@ -381,9 +383,14 @@
  <a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe"><code>RetryPolicy</code></a> is exceeded.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeFuture.html#get--">get()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeFuture.html" title="class in net.jodah.failsafe">FailsafeFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Waits if necessary for the execution to complete, and then returns its result.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeFuture.html#get-long-java.util.concurrent.TimeUnit-">get(long, TimeUnit)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeFuture.html" title="class in net.jodah.failsafe">FailsafeFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Waits if necessary for at most the given time for the execution to complete, and then returns its result, if
+ available.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/SyncFailsafe.html#get-java.util.concurrent.Callable-">get(Callable&lt;T&gt;)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/SyncFailsafe.html" title="class in net.jodah.failsafe">SyncFailsafe</a></dt>
 <dd>
 <div class="block">Executes the <code>callable</code> until a successful result is returned or the configured <a href="net/jodah/failsafe/RetryPolicy.html" title="class in net.jodah.failsafe"><code>RetryPolicy</code></a> is
@@ -484,7 +491,9 @@
 <h2 class="title">I</h2>
 <dl>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeFuture.html#isCancelled--">isCancelled()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeFuture.html" title="class in net.jodah.failsafe">FailsafeFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns <code>true</code> if this execution was cancelled before it completed normally.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/util/concurrent/DefaultScheduledFuture.html#isCancelled--">isCancelled()</a></span> - Method in class net.jodah.failsafe.util.concurrent.<a href="net/jodah/failsafe/util/concurrent/DefaultScheduledFuture.html" title="class in net.jodah.failsafe.util.concurrent">DefaultScheduledFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/CircuitBreaker.html#isClosed--">isClosed()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a></dt>
@@ -492,7 +501,9 @@
 <div class="block">Returns whether the circuit is closed.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/FailsafeFuture.html#isDone--">isDone()</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/FailsafeFuture.html" title="class in net.jodah.failsafe">FailsafeFuture</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns <code>true</code> if this execution completed.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/util/concurrent/DefaultScheduledFuture.html#isDone--">isDone()</a></span> - Method in class net.jodah.failsafe.util.concurrent.<a href="net/jodah/failsafe/util/concurrent/DefaultScheduledFuture.html" title="class in net.jodah.failsafe.util.concurrent">DefaultScheduledFuture</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="net/jodah/failsafe/CircuitBreaker.html#isFailure-java.lang.Object-java.lang.Throwable-">isFailure(Object, Throwable)</a></span> - Method in class net.jodah.failsafe.<a href="net/jodah/failsafe/CircuitBreaker.html" title="class in net.jodah.failsafe">CircuitBreaker</a></dt>
