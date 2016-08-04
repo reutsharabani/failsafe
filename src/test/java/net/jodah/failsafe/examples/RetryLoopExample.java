@@ -12,30 +12,30 @@ import net.jodah.failsafe.RetryPolicy;
 
 @SuppressWarnings("unchecked")
 public class RetryLoopExample {
-  static List<Object> list;
+	static List<Object> list;
 
-  static {
-    list = mock(List.class);
-    when(list.size()).thenThrow(IllegalStateException.class, IllegalStateException.class).thenReturn(5);
-  }
+	static {
+		list = mock(List.class);
+		when(list.size()).thenThrow(IllegalStateException.class, IllegalStateException.class).thenReturn(5);
+	}
 
-  public static void main(String... args) throws Throwable {
-    RetryPolicy retryPolicy = new RetryPolicy().retryOn(IllegalStateException.class).withBackoff(10, 40,
-        TimeUnit.MILLISECONDS);
-    Execution execution = new Execution(retryPolicy);
+	public static void main(String... args) throws Throwable {
+		RetryPolicy retryPolicy = new RetryPolicy.Builder().retryOn(IllegalStateException.class)
+				.withBackoff(10, 40, TimeUnit.MILLISECONDS).build();
+		Execution execution = new Execution(retryPolicy);
 
-    while (!execution.isComplete()) {
-      try {
-        execution.complete(list.size());
-      } catch (IllegalStateException e) {
-        execution.recordFailure(e);
+		while (!execution.isComplete()) {
+			try {
+				execution.complete(list.size());
+			} catch (IllegalStateException e) {
+				execution.recordFailure(e);
 
-        // Wait before retrying
-        Thread.sleep(execution.getWaitTime().toMillis());
-      }
-    }
+				// Wait before retrying
+				Thread.sleep(execution.getWaitTime().toMillis());
+			}
+		}
 
-    assertEquals(execution.getLastResult(), Integer.valueOf(5));
-    assertEquals(execution.getExecutions(), 3);
-  }
+		assertEquals(execution.getLastResult(), Integer.valueOf(5));
+		assertEquals(execution.getExecutions(), 3);
+	}
 }

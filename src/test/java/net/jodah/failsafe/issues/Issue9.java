@@ -21,39 +21,36 @@ import net.jodah.failsafe.RetryPolicy;
 
 @Test
 public class Issue9 {
-  public interface Service {
-    boolean connect();
-  }
+	public interface Service {
+		boolean connect();
+	}
 
-  public void test() throws Throwable {
-    // Given - Fail twice then succeed
-    AtomicInteger retryCounter = new AtomicInteger();
-    Service service = mock(Service.class);
-    when(service.connect()).thenThrow(failures(2, new IllegalStateException())).thenReturn(true);
-    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-    Listeners<Boolean> listeners = new Listeners<Boolean>() {
-      public void onRetry(Boolean result, Throwable failure) {
-        retryCounter.incrementAndGet();
-      }
-    };
-    Waiter waiter = new Waiter();
+	public void test() throws Throwable {
+		// Given - Fail twice then succeed
+		AtomicInteger retryCounter = new AtomicInteger();
+		Service service = mock(Service.class);
+		when(service.connect()).thenThrow(failures(2, new IllegalStateException())).thenReturn(true);
+		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+		Listeners<Boolean> listeners = new Listeners<Boolean>() {
+			public void onRetry(Boolean result, Throwable failure) {
+				retryCounter.incrementAndGet();
+			}
+		};
+		Waiter waiter = new Waiter();
 
-    // When
-    AtomicInteger successCounter = new AtomicInteger();
-    FailsafeFuture<Boolean> future = Failsafe.with(new RetryPolicy().withMaxRetries(2))
-        .with(executor)
-        .with(listeners)
-        .onSuccess(p -> {
-          successCounter.incrementAndGet();
-          waiter.resume();
-        })
-        .get(() -> service.connect());
+		// When
+		AtomicInteger successCounter = new AtomicInteger();
+		FailsafeFuture<Boolean> future = Failsafe.with(new RetryPolicy.Builder().withMaxRetries(2).build())
+				.with(executor).with(listeners).onSuccess(p -> {
+					successCounter.incrementAndGet();
+					waiter.resume();
+				}).get(() -> service.connect());
 
-    // Then
-    waiter.await(1000);
-    verify(service, times(3)).connect();
-    assertEquals(future.get().booleanValue(), true);
-    assertEquals(retryCounter.get(), 2);
-    assertEquals(successCounter.get(), 1);
-  }
+		// Then
+		waiter.await(1000);
+		verify(service, times(3)).connect();
+		assertEquals(future.get().booleanValue(), true);
+		assertEquals(retryCounter.get(), 2);
+		assertEquals(successCounter.get(), 1);
+	}
 }

@@ -9,14 +9,14 @@ import org.testng.annotations.Test;
 
 @Test
 public class FailsafeFutureTest {
-  ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
+	ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
 
-  @Test(expectedExceptions = TimeoutException.class)
-  public void shouldGetWithTimeout() throws Throwable {
-    Failsafe.with(new RetryPolicy()).with(executor).run(() -> {
-      Thread.sleep(1000);
-    }).get(100, TimeUnit.MILLISECONDS);
+	@Test(expectedExceptions = TimeoutException.class)
+	public void shouldGetWithTimeout() throws Throwable {
+		Failsafe.with(new RetryPolicy.Builder().build()).with(executor).run(() -> {
+			Thread.sleep(1000);
+		}).get(100, TimeUnit.MILLISECONDS);
 
-    Thread.sleep(1000);
-  }
+		Thread.sleep(1000);
+	}
 }

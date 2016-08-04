@@ -11,7 +11,7 @@ import rx.Subscriber;
 public class RxJavaExample {
   public static void main(String... args) throws Throwable {
     AtomicInteger failures = new AtomicInteger();
-    RetryPolicy retryPolicy = new RetryPolicy().withDelay(1, TimeUnit.SECONDS);
+    RetryPolicy retryPolicy = new RetryPolicy.Builder().withDelay(1, TimeUnit.SECONDS).build();
 
     Observable.create((Subscriber<? super String> s) -> {
       // Fail 3 times then succeed

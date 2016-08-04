@@ -81,7 +81,7 @@ public class SyncFailsafeTest extends AbstractFailsafeTest {
   private void assertGet(Object callable) throws Throwable {
     // Given - Fail twice then succeed
     when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, false, true);
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
+    RetryPolicy retryPolicy = new RetryPolicy.Builder().retryWhen(false).build();
 
     assertEquals(get(Failsafe.with(retryPolicy), callable), Boolean.TRUE);
     verify(service, times(5)).connect();
@@ -111,7 +111,7 @@ public class SyncFailsafeTest extends AbstractFailsafeTest {
     // Given - Fail twice then succeed
     when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, true);
     when(service.disconnect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, true);
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
+    RetryPolicy retryPolicy = new RetryPolicy.Builder().retryWhen(false).build();
 
     // When
     CompletableFuture.supplyAsync(() -> Failsafe.with(retryPolicy).get(() -> service.connect()))
@@ -140,7 +140,7 @@ public class SyncFailsafeTest extends AbstractFailsafeTest {
   public void shouldThrowOnNonRetriableFailure() throws Throwable {
     // Given
     when(service.connect()).thenThrow(ConnectException.class, ConnectException.class, IllegalStateException.class);
-    RetryPolicy retryPolicy = new RetryPolicy().retryOn(ConnectException.class);
+    RetryPolicy retryPolicy = new RetryPolicy.Builder().retryOn(ConnectException.class).build();
 
     // When / Then
     assertThrows(() -> Failsafe.with(retryPolicy).get(() -> service.connect()), FailsafeException.class,
@@ -176,7 +176,7 @@ public class SyncFailsafeTest extends AbstractFailsafeTest {
     }).start();
 
     try {
-      Failsafe.with(new RetryPolicy().withDelay(5, TimeUnit.SECONDS)).run(() -> {
+      Failsafe.with(new RetryPolicy.Builder().withDelay(5, TimeUnit.SECONDS).build()).run(() -> {
         throw new Exception();
       });
     } catch (Exception e) {
@@ -222,7 +222,7 @@ public class SyncFailsafeTest extends AbstractFailsafeTest {
    */
   public void shouldCompleteWhenMaxDurationExceeded() throws Throwable {
     when(service.connect()).thenReturn(false);
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false).withMaxDuration(100, TimeUnit.MILLISECONDS);
+    RetryPolicy retryPolicy = new RetryPolicy.Builder().retryWhen(false).withMaxDuration(100, TimeUnit.MILLISECONDS).build();
 
     assertEquals(Failsafe.with(retryPolicy).onFailure((r, f) -> {
       assertEquals(r, Boolean.FALSE);
