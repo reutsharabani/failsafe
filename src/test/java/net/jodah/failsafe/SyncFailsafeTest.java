@@ -43,232 +43,232 @@ import net.jodah.failsafe.function.ContextualRunnable;
 
 @Test
 public class SyncFailsafeTest extends AbstractFailsafeTest {
-  // Results from a synchronous Failsafe call
-  private @SuppressWarnings("unchecked") Class<? extends Throwable>[] syncThrowables = new Class[] {
-      ConnectException.class };
-  // Results from a get against a future that wraps a synchronous Failsafe call
-  private @SuppressWarnings("unchecked") Class<? extends Throwable>[] futureSyncThrowables = new Class[] {
-      ExecutionException.class, ConnectException.class };
+	// Results from a synchronous Failsafe call
+	private @SuppressWarnings("unchecked") Class<? extends Throwable>[] syncThrowables = new Class[] {
+			ConnectException.class };
+	// Results from a get against a future that wraps a synchronous Failsafe call
+	private @SuppressWarnings("unchecked") Class<? extends Throwable>[] futureSyncThrowables = new Class[] {
+			ExecutionException.class, ConnectException.class };
 
-  @BeforeMethod
-  protected void beforeMethod() {
-    reset(service);
-    counter = new AtomicInteger();
-  }
+	@BeforeMethod
+	protected void beforeMethod() {
+		reset(service);
+		counter = new AtomicInteger();
+	}
 
-  @Override
-  ScheduledExecutorService getExecutor() {
-    return null;
-  }
+	@Override
+	ScheduledExecutorService getExecutor() {
+		return null;
+	}
 
-  private void assertRun(Object runnable) throws Throwable {
-    // Given - Fail twice then succeed
-    when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(true);
+	private void assertRun(Object runnable) throws Throwable {
+		// Given - Fail twice then succeed
+		when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(true);
 
-    // When
-    run(Failsafe.with(retryAlways), runnable);
+		// When
+		run(Failsafe.with(retryAlways), runnable);
 
-    // Then
-    verify(service, times(3)).connect();
+		// Then
+		verify(service, times(3)).connect();
 
-    // Given - Fail three times
-    reset(service);
-    counter.set(0);
-    when(service.connect()).thenThrow(failures(10, new ConnectException()));
+		// Given - Fail three times
+		reset(service);
+		counter.set(0);
+		when(service.connect()).thenThrow(failures(10, new ConnectException()));
 
-    // When / Then
-    assertThrows(() -> {
-      run(Failsafe.with(retryTwice), runnable);
-    }, syncThrowables);
-    verify(service, times(3)).connect();
-  }
+		// When / Then
+		assertThrows(() -> {
+			run(Failsafe.with(retryTwice), runnable);
+		}, syncThrowables);
+		verify(service, times(3)).connect();
+	}
 
-  public void shouldRun() throws Throwable {
-    assertRun((CheckedRunnable) () -> service.connect());
-  }
+	public void shouldRun() throws Throwable {
+		assertRun((CheckedRunnable) () -> service.connect());
+	}
 
-  public void shouldRunContextual() throws Throwable {
-    assertRun((ContextualRunnable) context -> {
-      assertEquals(context.getExecutions(), counter.getAndIncrement());
-      service.connect();
-    });
-  }
+	public void shouldRunContextual() throws Throwable {
+		assertRun((ContextualRunnable) context -> {
+			assertEquals(context.getExecutions(), counter.getAndIncrement());
+			service.connect();
+		});
+	}
 
-  private void assertGet(Object callable) throws Throwable {
-    // Given - Fail twice then succeed
-    when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, false, true);
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
+	private void assertGet(Object callable) throws Throwable {
+		// Given - Fail twice then succeed
+		when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, false, true);
+		RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryWhen(false).build();
 
-    assertEquals(get(Failsafe.with(retryPolicy), callable), Boolean.TRUE);
-    verify(service, times(5)).connect();
+		assertEquals(get(Failsafe.with(retryPolicy), callable), Boolean.TRUE);
+		verify(service, times(5)).connect();
 
-    // Given - Fail three times
-    reset(service);
-    counter.set(0);
-    when(service.connect()).thenThrow(failures(10, new ConnectException()));
+		// Given - Fail three times
+		reset(service);
+		counter.set(0);
+		when(service.connect()).thenThrow(failures(10, new ConnectException()));
 
-    // When / Then
-    assertThrows(() -> get(Failsafe.with(retryTwice), callable), syncThrowables);
-    verify(service, times(3)).connect();
-  }
+		// When / Then
+		assertThrows(() -> get(Failsafe.with(retryTwice), callable), syncThrowables);
+		verify(service, times(3)).connect();
+	}
 
-  public void shouldGet() throws Throwable {
-    assertGet((Callable<Boolean>) () -> service.connect());
-  }
+	public void shouldGet() throws Throwable {
+		assertGet((Callable<Boolean>) () -> service.connect());
+	}
 
-  public void shouldGetContextual() throws Throwable {
-    assertGet((ContextualCallable<Boolean>) context -> {
-      assertEquals(context.getExecutions(), counter.getAndIncrement());
-      return service.connect();
-    });
-  }
+	public void shouldGetContextual() throws Throwable {
+		assertGet((ContextualCallable<Boolean>) context -> {
+			assertEquals(context.getExecutions(), counter.getAndIncrement());
+			return service.connect();
+		});
+	}
 
-  public void testPerStageRetries() throws Throwable {
-    // Given - Fail twice then succeed
-    when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, true);
-    when(service.disconnect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, true);
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
+	public void testPerStageRetries() throws Throwable {
+		// Given - Fail twice then succeed
+		when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, true);
+		when(service.disconnect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, true);
+		RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryWhen(false).build();
 
-    // When
-    CompletableFuture.supplyAsync(() -> Failsafe.with(retryPolicy).get(() -> service.connect()))
-        .thenRun(() -> Failsafe.with(retryPolicy).get(() -> service.disconnect()))
-        .get();
+		// When
+		CompletableFuture.supplyAsync(() -> Failsafe.with(retryPolicy).get(() -> service.connect()))
+				.thenRun(() -> Failsafe.with(retryPolicy).get(() -> service.disconnect())).get();
 
-    // Then
-    verify(service, times(4)).connect();
-    verify(service, times(4)).disconnect();
+		// Then
+		verify(service, times(4)).connect();
+		verify(service, times(4)).disconnect();
 
-    // Given - Fail three times
-    reset(service);
-    when(service.connect()).thenThrow(failures(10, new ConnectException()));
+		// Given - Fail three times
+		reset(service);
+		when(service.connect()).thenThrow(failures(10, new ConnectException()));
 
-    // When / Then
-    assertThrows(
-        () -> CompletableFuture.supplyAsync(() -> Failsafe.with(retryTwice).get(() -> service.connect())).get(),
-        futureSyncThrowables);
-    verify(service, times(3)).connect();
-  }
+		// When / Then
+		assertThrows(
+				() -> CompletableFuture.supplyAsync(() -> Failsafe.with(retryTwice).get(() -> service.connect())).get(),
+				futureSyncThrowables);
+		verify(service, times(3)).connect();
+	}
 
-  /**
-   * Asserts that retries are performed then a non-retryable failure is thrown.
-   */
-  @SuppressWarnings("unchecked")
-  public void shouldThrowOnNonRetriableFailure() throws Throwable {
-    // Given
-    when(service.connect()).thenThrow(ConnectException.class, ConnectException.class, IllegalStateException.class);
-    RetryPolicy retryPolicy = new RetryPolicy().retryOn(ConnectException.class);
+	/**
+	 * Asserts that retries are performed then a non-retryable failure is thrown.
+	 */
+	@SuppressWarnings("unchecked")
+	public void shouldThrowOnNonRetriableFailure() throws Throwable {
+		// Given
+		when(service.connect()).thenThrow(ConnectException.class, ConnectException.class, IllegalStateException.class);
+		RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryOn(ConnectException.class).build();
 
-    // When / Then
-    assertThrows(() -> Failsafe.with(retryPolicy).get(() -> service.connect()), IllegalStateException.class);
-    verify(service, times(3)).connect();
-  }
+		// When / Then
+		assertThrows(() -> Failsafe.with(retryPolicy).get(() -> service.connect()), IllegalStateException.class);
+		verify(service, times(3)).connect();
+	}
 
-  public void shouldOpenCircuitWhenTimeoutExceeded() throws Throwable {
-    // Given
-    CircuitBreaker breaker = new CircuitBreaker().withTimeout(10, TimeUnit.MILLISECONDS);
-    assertTrue(breaker.isClosed());
+	public void shouldOpenCircuitWhenTimeoutExceeded() throws Throwable {
+		// Given
+		CircuitBreaker breaker = new CircuitBreaker().withTimeout(10, TimeUnit.MILLISECONDS);
+		assertTrue(breaker.isClosed());
 
-    // When
-    Failsafe.with(breaker).run(() -> {
-      Thread.sleep(20);
-    });
+		// When
+		Failsafe.with(breaker).run(() -> {
+			Thread.sleep(20);
+		});
 
-    // Then
-    assertTrue(breaker.isOpen());
-  }
+		// Then
+		assertTrue(breaker.isOpen());
+	}
 
-  /**
-   * Asserts that Failsafe throws when interrupting a waiting thread.
-   */
-  public void shouldThrowWhenInterruptedDuringSynchronousDelay() throws Throwable {
-    Thread mainThread = Thread.currentThread();
-    new Thread(() -> {
-      try {
-        Thread.sleep(100);
-        mainThread.interrupt();
-      } catch (Exception e) {
-      }
-    }).start();
+	/**
+	 * Asserts that Failsafe throws when interrupting a waiting thread.
+	 */
+	public void shouldThrowWhenInterruptedDuringSynchronousDelay() throws Throwable {
+		Thread mainThread = Thread.currentThread();
+		new Thread(() -> {
+			try {
+				Thread.sleep(100);
+				mainThread.interrupt();
+			} catch (Exception e) {
+			}
+		}).start();
 
-    try {
-      Failsafe.with(new RetryPolicy().withDelay(5, TimeUnit.SECONDS)).run(() -> {
-        throw new Exception();
-      });
-    } catch (Exception e) {
-      assertTrue(e instanceof FailsafeException);
-      assertTrue(e.getCause() instanceof InterruptedException);
-      // Clear interrupt flag
-      Thread.interrupted();
-    }
-  }
+		try {
+			Failsafe.with(RetryPolicy.newBuilder().withDelay(5, TimeUnit.SECONDS).build()).run(() -> {
+				throw new Exception();
+			});
+		} catch (Exception e) {
+			assertTrue(e instanceof FailsafeException);
+			assertTrue(e.getCause() instanceof InterruptedException);
+			// Clear interrupt flag
+			Thread.interrupted();
+		}
+	}
 
-  public void shouldRetryAndOpenCircuit() {
-    CircuitBreaker circuit = new CircuitBreaker().withFailureThreshold(3).withDelay(10, TimeUnit.MINUTES);
+	public void shouldRetryAndOpenCircuit() {
+		CircuitBreaker circuit = new CircuitBreaker().withFailureThreshold(3).withDelay(10, TimeUnit.MINUTES);
 
-    // Given - Fail twice then succeed
-    when(service.connect()).thenThrow(failures(20, new ConnectException())).thenReturn(true);
+		// Given - Fail twice then succeed
+		when(service.connect()).thenThrow(failures(20, new ConnectException())).thenReturn(true);
 
-    // When
-    assertThrows(() -> Failsafe.with(retryAlways).with(circuit).run(() -> service.connect()),
-        CircuitBreakerOpenException.class);
+		// When
+		assertThrows(() -> Failsafe.with(retryAlways).with(circuit).run(() -> service.connect()),
+				CircuitBreakerOpenException.class);
 
-    // Then
-    verify(service, times(3)).connect();
-  }
+		// Then
+		verify(service, times(3)).connect();
+	}
 
-  public void shouldThrowCircuitBreakerOpenExceptionAfterFailuresExceeded() {
-    // Given
-    CircuitBreaker breaker = new CircuitBreaker().withFailureThreshold(2).withDelay(10, TimeUnit.SECONDS);
-    AtomicInteger counter = new AtomicInteger();
-    CheckedRunnable runnable = () -> Failsafe.with(breaker).run(() -> {
-      counter.incrementAndGet();
-      throw new Exception();
-    });
+	public void shouldThrowCircuitBreakerOpenExceptionAfterFailuresExceeded() {
+		// Given
+		CircuitBreaker breaker = new CircuitBreaker().withFailureThreshold(2).withDelay(10, TimeUnit.SECONDS);
+		AtomicInteger counter = new AtomicInteger();
+		CheckedRunnable runnable = () -> Failsafe.with(breaker).run(() -> {
+			counter.incrementAndGet();
+			throw new Exception();
+		});
 
-    // When
-    ignoreExceptions(runnable);
-    ignoreExceptions(runnable);
+		// When
+		ignoreExceptions(runnable);
+		ignoreExceptions(runnable);
 
-    // Then
-    assertThrows(runnable, CircuitBreakerOpenException.class);
-    assertEquals(counter.get(), 2);
-  }
+		// Then
+		assertThrows(runnable, CircuitBreakerOpenException.class);
+		assertEquals(counter.get(), 2);
+	}
 
-  /**
-   * Asserts that an execution is failed when the max duration is exceeded.
-   */
-  public void shouldCompleteWhenMaxDurationExceeded() throws Throwable {
-    when(service.connect()).thenReturn(false);
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false).withMaxDuration(100, TimeUnit.MILLISECONDS);
+	/**
+	 * Asserts that an execution is failed when the max duration is exceeded.
+	 */
+	public void shouldCompleteWhenMaxDurationExceeded() throws Throwable {
+		when(service.connect()).thenReturn(false);
+		RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryWhen(false).withMaxDuration(100, TimeUnit.MILLISECONDS)
+				.build();
 
-    assertEquals(Failsafe.with(retryPolicy).onFailure((r, f) -> {
-      assertEquals(r, Boolean.FALSE);
-      assertNull(f);
-    }).get(() -> {
-      Testing.sleep(120);
-      return service.connect();
-    }), Boolean.FALSE);
-    verify(service).connect();
-  }
+		assertEquals(Failsafe.with(retryPolicy).onFailure((r, f) -> {
+			assertEquals(r, Boolean.FALSE);
+			assertNull(f);
+		}).get(() -> {
+			Testing.sleep(120);
+			return service.connect();
+		}), Boolean.FALSE);
+		verify(service).connect();
+	}
 
-  public void shouldWrapCheckedExceptions() throws Throwable {
-    assertThrows(() -> Failsafe.with(new RetryPolicy().withMaxRetries(1)).run(() -> {
-      throw new TimeoutException();
-    }), FailsafeException.class, TimeoutException.class);
-  }
+	public void shouldWrapCheckedExceptions() throws Throwable {
+		assertThrows(() -> Failsafe.with(RetryPolicy.newBuilder().withMaxRetries(1).build()).run(() -> {
+			throw new TimeoutException();
+		}), FailsafeException.class, TimeoutException.class);
+	}
 
-  private void run(SyncFailsafe<?> failsafe, Object runnable) {
-    if (runnable instanceof CheckedRunnable)
-      failsafe.run((CheckedRunnable) runnable);
-    else if (runnable instanceof ContextualRunnable)
-      failsafe.run((ContextualRunnable) runnable);
-  }
+	private void run(SyncFailsafe<?> failsafe, Object runnable) {
+		if (runnable instanceof CheckedRunnable)
+			failsafe.run((CheckedRunnable) runnable);
+		else if (runnable instanceof ContextualRunnable)
+			failsafe.run((ContextualRunnable) runnable);
+	}
 
-  @SuppressWarnings("unchecked")
-  private <T> T get(SyncFailsafe<?> failsafe, Object callable) {
-    if (callable instanceof Callable)
-      return (T) failsafe.get((Callable<T>) callable);
-    else
-      return (T) failsafe.get((ContextualCallable<T>) callable);
-  }
+	@SuppressWarnings("unchecked")
+	private <T> T get(SyncFailsafe<?> failsafe, Object callable) {
+		if (callable instanceof Callable)
+			return (T) failsafe.get((Callable<T>) callable);
+		else
+			return (T) failsafe.get((ContextualCallable<T>) callable);
+	}
 }

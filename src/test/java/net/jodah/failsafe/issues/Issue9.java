@@ -55,7 +55,7 @@ public class Issue9 {
 
     // When
     AtomicInteger successCounter = new AtomicInteger();
-    FailsafeFuture<Boolean> future = Failsafe.with(new RetryPolicy().withMaxRetries(2))
+    FailsafeFuture<Boolean> future = Failsafe.with(RetryPolicy.newBuilder().withMaxRetries(2).build())
         .with(executor)
         .with(listeners)
         .onSuccess(p -> {

@@ -37,7 +37,7 @@ public class NettyExample {
   public static void main(String... args) throws Throwable {
     EventLoopGroup group = new NioEventLoopGroup();
     Bootstrap bootstrap = createBootstrap(group);
-    RetryPolicy retryPolicy = new RetryPolicy().withDelay(1, TimeUnit.SECONDS);
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().withDelay(1, TimeUnit.SECONDS).build();
 
     Failsafe.with(retryPolicy).with(group).runAsync(
         execution -> bootstrap.connect(HOST, PORT).addListener((ChannelFutureListener) channelFuture -> {

@@ -31,9 +31,9 @@ import net.jodah.failsafe.RetryPolicy;
  */
 @Test
 public class Issue36 {
-  RetryPolicy retryPolicy = new RetryPolicy().retryIf((Boolean r) -> r == null || !r)
+  RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryIf((Boolean r) -> r == null || !r)
       .retryOn(Exception.class)
-      .withMaxRetries(3);
+      .withMaxRetries(3).build();
   AtomicInteger calls;
   AtomicInteger failedAttempts;
   AtomicInteger retries;
@@ -70,9 +70,9 @@ public class Issue36 {
 
   @Test
   public void failedAttemptListener_WithFailedResponses_ShouldBeCalled() throws Exception {
-    RetryPolicy policy = new RetryPolicy().retryIf((Boolean response) -> response != null && !response)
+    RetryPolicy policy = RetryPolicy.newBuilder().retryIf((Boolean response) -> response != null && !response)
         .retryOn(Exception.class)
-        .withMaxRetries(3);
+        .withMaxRetries(3).build();
     AtomicInteger listenerCallbacks = new AtomicInteger();
     Failsafe.<Boolean>with(policy)
         .onFailedAttempt((failedResponse, exception, context) -> listenerCallbacks.incrementAndGet())
@@ -82,9 +82,9 @@ public class Issue36 {
 
   @Test
   public void retryListener_WithFailedResponses_ShouldBeCalled() throws Exception {
-    RetryPolicy policy = new RetryPolicy().retryIf((Boolean response) -> response != null && !response)
+    RetryPolicy policy = RetryPolicy.newBuilder().retryIf((Boolean response) -> response != null && !response)
         .retryOn(Exception.class)
-        .withMaxRetries(3);
+        .withMaxRetries(3).build();
     AtomicInteger listenerCallbacks = new AtomicInteger();
     Failsafe.<Boolean>with(policy)
         .onRetry((failedResponse, exception, context) -> listenerCallbacks.incrementAndGet())
@@ -94,9 +94,9 @@ public class Issue36 {
 
   @Test
   public void failedAttemptListener_WithExceptions_ShouldBeCalled() throws Exception {
-    RetryPolicy policy = new RetryPolicy().retryIf((Boolean response) -> response != null && !response)
+    RetryPolicy policy = RetryPolicy.newBuilder().retryIf((Boolean response) -> response != null && !response)
         .retryOn(Exception.class)
-        .withMaxRetries(3);
+        .withMaxRetries(3).build();
     AtomicInteger listenerCallbacks = new AtomicInteger();
     try {
       Failsafe.<Boolean>with(policy)
@@ -111,9 +111,9 @@ public class Issue36 {
 
   @Test
   public void retryListener_WithExceptions_ShouldBeCalled() throws Exception {
-    RetryPolicy policy = new RetryPolicy().retryIf((Boolean response) -> response != null && !response)
+    RetryPolicy policy = RetryPolicy.newBuilder().retryIf((Boolean response) -> response != null && !response)
         .retryOn(Exception.class)
-        .withMaxRetries(3);
+        .withMaxRetries(3).build();
     AtomicInteger listenerCallbacks = new AtomicInteger();
     try {
       Failsafe.<Boolean>with(policy)

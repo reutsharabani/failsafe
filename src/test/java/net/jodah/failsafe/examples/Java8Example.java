@@ -29,7 +29,7 @@ public class Java8Example {
   @SuppressWarnings("unused")
   public static void main(String... args) {
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
-    RetryPolicy retryPolicy = new RetryPolicy();
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().build();
 
     // Create a retryable functional interface
     Function<String, String> bar = value -> Failsafe.with(retryPolicy).get(() -> value + "bar");

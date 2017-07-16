@@ -32,10 +32,10 @@ public class Issue5 {
    */
   public void test() throws Throwable {
     Waiter waiter = new Waiter();
-    RetryPolicy retryPolicy = new RetryPolicy().withDelay(100, TimeUnit.MILLISECONDS)
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().withDelay(100, TimeUnit.MILLISECONDS)
         .withMaxDuration(2, TimeUnit.SECONDS)
         .withMaxRetries(3)
-        .retryWhen(null);
+        .retryWhen(null).build();
 
     ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     Failsafe.with(retryPolicy).with(executor).onFailure((result, failure) -> {

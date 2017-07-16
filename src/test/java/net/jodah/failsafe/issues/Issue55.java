@@ -32,12 +32,12 @@ public class Issue55 {
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
     AtomicInteger counter = new AtomicInteger();
-    Failsafe.with(new RetryPolicy()).with(executor).withFallback(() -> counter.incrementAndGet()).get(() -> null);
+    Failsafe.with(RetryPolicy.newBuilder().build()).with(executor).withFallback(() -> counter.incrementAndGet()).get(() -> null);
 
     Thread.sleep(100);
     assertEquals(counter.get(), 0);
 
-    Failsafe.with(new RetryPolicy().withMaxRetries(1))
+    Failsafe.with(RetryPolicy.newBuilder().withMaxRetries(1).build())
         .with(executor)
         .withFallback(() -> counter.incrementAndGet())
         .run(() -> {

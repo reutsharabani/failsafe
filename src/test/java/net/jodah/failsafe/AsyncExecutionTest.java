@@ -52,7 +52,7 @@ public class AsyncExecutionTest {
 
   public void testComplete() {
     // Given
-    exec = new AsyncExecution(callable, scheduler, future, configFor(new RetryPolicy()));
+    exec = new AsyncExecution(callable, scheduler, future, configFor(RetryPolicy.newBuilder().build()));
 
     // When
     exec.complete();
@@ -67,7 +67,7 @@ public class AsyncExecutionTest {
 
   public void testCompleteForResult() {
     // Given
-    exec = new AsyncExecution(callable, scheduler, future, configFor(new RetryPolicy().retryWhen(null)));
+    exec = new AsyncExecution(callable, scheduler, future, configFor(RetryPolicy.newBuilder().retryWhen(null).build()));
 
     // When / Then
     assertFalse(exec.complete(null));
@@ -83,7 +83,7 @@ public class AsyncExecutionTest {
   }
 
   public void testGetAttemptCount() {
-    exec = new AsyncExecution(callable, scheduler, future, configFor(new RetryPolicy()));
+    exec = new AsyncExecution(callable, scheduler, future, configFor(RetryPolicy.newBuilder().build()));
     exec.retryOn(e);
     exec.before();
     exec.retryOn(e);
@@ -92,7 +92,7 @@ public class AsyncExecutionTest {
 
   public void testRetryForResult() {
     // Given retry for null
-    exec = new AsyncExecution(callable, scheduler, future, configFor(new RetryPolicy().retryWhen(null)));
+    exec = new AsyncExecution(callable, scheduler, future, configFor(RetryPolicy.newBuilder().retryWhen(null).build()));
 
     // When / Then
     assertFalse(exec.complete(null));
@@ -111,7 +111,7 @@ public class AsyncExecutionTest {
 
     // Given 2 max retries
     exec = new AsyncExecution(callable, scheduler, future,
-        configFor(new RetryPolicy().retryWhen(null).withMaxRetries(2)));
+        configFor(RetryPolicy.newBuilder().retryWhen(null).withMaxRetries(2).build()));
 
     // When / Then
     resetMocks();
@@ -132,7 +132,7 @@ public class AsyncExecutionTest {
 
   public void testRetryForResultAndThrowable() {
     // Given retry for null
-    exec = new AsyncExecution(callable, scheduler, future, configFor(new RetryPolicy().retryWhen(null)));
+    exec = new AsyncExecution(callable, scheduler, future, configFor(RetryPolicy.newBuilder().retryWhen(null).build()));
 
     // When / Then
     assertFalse(exec.complete(null));
@@ -153,7 +153,7 @@ public class AsyncExecutionTest {
 
     // Given 2 max retries
     exec = new AsyncExecution(callable, scheduler, future,
-        configFor(new RetryPolicy().retryWhen(null).withMaxRetries(2)));
+        configFor(RetryPolicy.newBuilder().retryWhen(null).withMaxRetries(2).build()));
 
     // When / Then
     resetMocks();
@@ -175,7 +175,7 @@ public class AsyncExecutionTest {
   public void testRetryOn() {
     // Given retry on IllegalArgumentException
     exec = new AsyncExecution(callable, scheduler, future,
-        configFor(new RetryPolicy().retryOn(IllegalArgumentException.class)));
+        configFor(RetryPolicy.newBuilder().retryOn(IllegalArgumentException.class).build()));
 
     // When / Then
     assertTrue(exec.retryOn(new IllegalArgumentException()));
@@ -191,7 +191,7 @@ public class AsyncExecutionTest {
     verify(future).complete(null, e, null, false);
 
     // Given 2 max retries
-    exec = new AsyncExecution(callable, scheduler, future, configFor(new RetryPolicy().withMaxRetries(1)));
+    exec = new AsyncExecution(callable, scheduler, future, configFor(RetryPolicy.newBuilder().withMaxRetries(1).build()));
 
     // When / Then
     resetMocks();
@@ -210,7 +210,7 @@ public class AsyncExecutionTest {
 
   @Test(expectedExceptions = IllegalStateException.class)
   public void shouldThrowOnRetryWhenAlreadyComplete() {
-    exec = new AsyncExecution(callable, scheduler, future, configFor(new RetryPolicy()));
+    exec = new AsyncExecution(callable, scheduler, future, configFor(RetryPolicy.newBuilder().build()));
     exec.complete();
     exec.before();
     exec.retryOn(e);
@@ -218,7 +218,7 @@ public class AsyncExecutionTest {
 
   public void testCompleteOrRetry() {
     // Given retry on IllegalArgumentException
-    exec = new AsyncExecution(callable, scheduler, future, configFor(new RetryPolicy()));
+    exec = new AsyncExecution(callable, scheduler, future, configFor(RetryPolicy.newBuilder().build()));
 
     // When / Then
     exec.completeOrRetry(null, e);

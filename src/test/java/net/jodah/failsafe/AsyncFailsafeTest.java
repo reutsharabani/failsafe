@@ -129,7 +129,7 @@ public class AsyncFailsafeTest extends AbstractFailsafeTest {
   private void assertGetWithExecutor(Object callable) throws Throwable {
     // Given - Fail twice then succeed
     when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, false, true);
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryWhen(false).build();
 
     // When / Then
     FailsafeFuture<Boolean> future = get(
@@ -190,7 +190,7 @@ public class AsyncFailsafeTest extends AbstractFailsafeTest {
   private void assertGetFuture(Object callable) throws Throwable {
     // Given - Fail twice then succeed
     when(service.connect()).thenThrow(failures(2, new ConnectException())).thenReturn(false, false, true);
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryWhen(false).build();
 
     // When
     CompletableFuture<Boolean> future = future(Failsafe.with(retryPolicy).with(executor), callable);
@@ -334,7 +334,7 @@ public class AsyncFailsafeTest extends AbstractFailsafeTest {
     Waiter waiter = new Waiter();
 
     // When
-    FailsafeFuture<Void> future = Failsafe.with(new RetryPolicy().retryWhen(null).retryOn(Exception.class))
+    FailsafeFuture<Void> future = Failsafe.with(RetryPolicy.newBuilder().retryWhen(null).retryOn(Exception.class).build())
         .with(executor)
         .run(() -> waiter.fail("Should not execute callable since executor has been shutdown"));
 
@@ -350,7 +350,7 @@ public class AsyncFailsafeTest extends AbstractFailsafeTest {
     AtomicInteger counter = new AtomicInteger();
 
     // When
-    FailsafeFuture<String> future = Failsafe.with(new RetryPolicy().retryWhen(null).retryOn(Exception.class))
+    FailsafeFuture<String> future = Failsafe.with(RetryPolicy.newBuilder().retryWhen(null).retryOn(Exception.class).build())
         .with(executor)
         .get(() -> {
           counter.incrementAndGet();
@@ -367,7 +367,7 @@ public class AsyncFailsafeTest extends AbstractFailsafeTest {
   @SuppressWarnings("unused")
   public void shouldSupportCovariance() {
     FastService fastService = mock(FastService.class);
-    FailsafeFuture<Service> future = Failsafe.with(new RetryPolicy()).with(executor).get(() -> fastService);
+    FailsafeFuture<Service> future = Failsafe.with(RetryPolicy.newBuilder().build()).with(executor).get(() -> fastService);
   }
 
   private FailsafeFuture<?> run(AsyncFailsafe<?> failsafe, Object runnable) {

@@ -38,9 +38,9 @@ import net.jodah.failsafe.function.CheckedRunnable;
 
 @Test
 public abstract class AbstractFailsafeTest {
-  RetryPolicy retryAlways = new RetryPolicy();
-  RetryPolicy retryNever = new RetryPolicy().withMaxRetries(0);
-  RetryPolicy retryTwice = new RetryPolicy().withMaxRetries(2);
+  RetryPolicy retryAlways = RetryPolicy.newBuilder().build();
+  RetryPolicy retryNever = RetryPolicy.newBuilder().withMaxRetries(0).build();
+  RetryPolicy retryTwice = RetryPolicy.newBuilder().withMaxRetries(2).build();
   Service service = mock(Service.class);
   AtomicInteger counter;
 
@@ -127,7 +127,7 @@ public abstract class AbstractFailsafeTest {
   public void shouldThrowOnNonRetriableFailure() throws Throwable {
     // Given
     when(service.connect()).thenThrow(ConnectException.class, ConnectException.class, IllegalStateException.class);
-    RetryPolicy retryPolicy = new RetryPolicy().retryOn(ConnectException.class);
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryOn(ConnectException.class).build();
 
     // When / Then
     assertThrows(() -> failsafeGet(retryPolicy, service::connect), IllegalStateException.class);
@@ -159,7 +159,7 @@ public abstract class AbstractFailsafeTest {
    */
   public void shouldFallbackAfterFailureWithRetries() throws Throwable {
     // Given
-    RetryPolicy retryPolicy = new RetryPolicy().withMaxRetries(2);
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().withMaxRetries(2).build();
     Exception failure = new ConnectException();
     when(service.connect()).thenThrow(failures(3, failure));
     Waiter waiter = new Waiter();

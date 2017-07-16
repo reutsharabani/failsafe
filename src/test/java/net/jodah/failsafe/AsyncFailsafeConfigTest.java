@@ -113,7 +113,7 @@ public class AsyncFailsafeConfigTest {
 
     // Given - Fail twice then succeed
     when(service.connect()).thenThrow(failures(2, new IllegalStateException())).thenReturn(false, false, true);
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false);
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryWhen(false).build();
 
     // When
     registerListeners(Failsafe.with(retryPolicy).with(executor)).get(callable);
@@ -137,7 +137,7 @@ public class AsyncFailsafeConfigTest {
     // Given - Fail 2 times then don't match policy
     when(service.connect()).thenThrow(failures(2, new IllegalStateException()))
         .thenThrow(IllegalArgumentException.class);
-    RetryPolicy retryPolicy = new RetryPolicy().retryOn(IllegalStateException.class).withMaxRetries(10);
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryOn(IllegalStateException.class).withMaxRetries(10).build();
 
     // When
     registerListeners(Failsafe.with(retryPolicy).with(executor)).get(callable);
@@ -160,7 +160,7 @@ public class AsyncFailsafeConfigTest {
 
     // Given - Fail 4 times and exceed retries
     when(service.connect()).thenThrow(failures(10, new IllegalStateException()));
-    RetryPolicy retryPolicy = new RetryPolicy().retryWhen(false).withMaxRetries(3);
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().retryWhen(false).withMaxRetries(3).build();
 
     // When
     registerListeners(Failsafe.with(retryPolicy).with(executor)).get(callable);
@@ -184,7 +184,7 @@ public class AsyncFailsafeConfigTest {
     // Given - Fail twice then abort
     when(service.connect()).thenThrow(failures(3, new IllegalStateException()))
         .thenThrow(new IllegalArgumentException());
-    RetryPolicy retryPolicy = new RetryPolicy().abortOn(IllegalArgumentException.class).withMaxRetries(3);
+    RetryPolicy retryPolicy = RetryPolicy.newBuilder().abortOn(IllegalArgumentException.class).withMaxRetries(3).build();
 
     // When
     Asserts.assertThrows(() -> registerListeners(Failsafe.with(retryPolicy).with(executor)).get(callable).get(),

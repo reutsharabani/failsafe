@@ -31,53 +31,55 @@ import net.jodah.concurrentunit.Waiter;
 
 @Test
 public class FailsafeFutureTest {
-  ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
+	ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
 
-  @Test(expectedExceptions = TimeoutException.class)
-  public void shouldGetWithTimeout() throws Throwable {
-    Failsafe.with(new RetryPolicy()).with(executor).run(() -> {
-      Thread.sleep(1000);
-    }).get(100, TimeUnit.MILLISECONDS);
+	@Test(expectedExceptions = TimeoutException.class)
+	public void shouldGetWithTimeout() throws Throwable {
+		Failsafe.with(RetryPolicy.newBuilder().build()).with(executor).run(() -> {
+			Thread.sleep(1000);
+		}).get(100, TimeUnit.MILLISECONDS);
 
-    Thread.sleep(1000);
-  }
+		Thread.sleep(1000);
+	}
 
-  public void shouldCompleteFutureOnCancel() throws Throwable {
-    Waiter waiter = new Waiter();
-    FailsafeFuture<String> future = Failsafe.with(new RetryPolicy()).with(executor).onComplete((r, f) -> {
-      waiter.assertNull(r);
-      waiter.assertTrue(f instanceof CancellationException);
-      waiter.resume();
-    }).get(() -> {
-      Thread.sleep(5000);
-      return "test";
-    });
+	public void shouldCompleteFutureOnCancel() throws Throwable {
+		Waiter waiter = new Waiter();
+		FailsafeFuture<String> future = Failsafe.with(RetryPolicy.newBuilder().build()).with(executor)
+				.onComplete((r, f) -> {
+					waiter.assertNull(r);
+					waiter.assertTrue(f instanceof CancellationException);
+					waiter.resume();
+				}).get(() -> {
+					Thread.sleep(5000);
+					return "test";
+				});
 
-    Testing.sleep(300);
-    future.cancel(true);
-    waiter.await(1000);
+		Testing.sleep(300);
+		future.cancel(true);
+		waiter.await(1000);
 
-    assertTrue(future.isCancelled());
-    assertTrue(future.isDone());
-    Asserts.assertThrows(() -> future.get(), CancellationException.class);
-  }
+		assertTrue(future.isCancelled());
+		assertTrue(future.isDone());
+		Asserts.assertThrows(() -> future.get(), CancellationException.class);
+	}
 
-  /**
-   * Asserts that completion handlers are not called again if a completed execution is cancelled.
-   */
-  public void shouldNotCancelCompletedExecution() throws Throwable {
-    Waiter waiter = new Waiter();
-    FailsafeFuture<String> future = Failsafe.with(new RetryPolicy()).with(executor).onComplete((r, f) -> {
-      waiter.assertEquals("test", r);
-      waiter.assertNull(f);
-      waiter.resume();
-      Thread.sleep(100);
-    }).get(() -> "test");
+	/**
+	 * Asserts that completion handlers are not called again if a completed
+	 * execution is cancelled.
+	 */
+	public void shouldNotCancelCompletedExecution() throws Throwable {
+		Waiter waiter = new Waiter();
+		FailsafeFuture<String> future = Failsafe.with(RetryPolicy.newBuilder().build()).with(executor).onComplete((r, f) -> {
+			waiter.assertEquals("test", r);
+			waiter.assertNull(f);
+			waiter.resume();
+			Thread.sleep(100);
+		}).get(() -> "test");
 
-    waiter.await(1000);
-    assertFalse(future.cancel(true));
-    assertFalse(future.isCancelled());
-    assertTrue(future.isDone());
-    assertEquals(future.get(), "test");
-  }
+		waiter.await(1000);
+		assertFalse(future.cancel(true));
+		assertFalse(future.isCancelled());
+		assertTrue(future.isDone());
+		assertEquals(future.get(), "test");
+	}
 }

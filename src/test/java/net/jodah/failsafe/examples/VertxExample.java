@@ -30,9 +30,9 @@ public class VertxExample {
   static Vertx vertx = Vertx.vertx();
 
   /** Create RetryPolicy to handle Vert.x failures */
-  static RetryPolicy retryPolicy = new RetryPolicy()
+  static RetryPolicy retryPolicy = RetryPolicy.newBuilder()
       .retryOn((ReplyException failure) -> ReplyFailure.RECIPIENT_FAILURE.equals(failure.failureType())
-          || ReplyFailure.TIMEOUT.equals(failure.failureType()));
+          || ReplyFailure.TIMEOUT.equals(failure.failureType())).build();
 
   /** Adapt Vert.x timer to a Failsafe Scheduler */
   static Scheduler scheduler = (callable, delay, unit) -> {
@@ -75,7 +75,7 @@ public class VertxExample {
     });
 
     // Retryable sender
-    Failsafe.with(retryPolicy.copy().withDelay(1, TimeUnit.SECONDS))
+    Failsafe.with(new RetryPolicy.Builder(retryPolicy).copy().withDelay(1, TimeUnit.SECONDS).build())
         .with(scheduler)
         .runAsync(execution -> vertx.eventBus().send("ping-address", "ping!", reply -> {
           if (reply.succeeded())

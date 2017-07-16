@@ -36,7 +36,7 @@ import net.jodah.failsafe.RetryPolicy;
 public class Issue52 {
   public void shouldCancelExecutionViaFuture() throws Throwable {
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
-    FailsafeFuture<String> proxyFuture = Failsafe.with(new RetryPolicy().withDelay(10, TimeUnit.MILLISECONDS))
+    FailsafeFuture<String> proxyFuture = Failsafe.with(RetryPolicy.newBuilder().withDelay(10, TimeUnit.MILLISECONDS).build())
         .with(scheduler)
         .get(exec -> {
           throw new IllegalStateException();
@@ -51,7 +51,7 @@ public class Issue52 {
   public void shouldCancelExecutionViaCompletableFuture() throws Throwable {
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
     AtomicInteger counter = new AtomicInteger();
-    CompletableFuture<String> proxyFuture = Failsafe.with(new RetryPolicy().withDelay(10, TimeUnit.MILLISECONDS))
+    CompletableFuture<String> proxyFuture = Failsafe.with(RetryPolicy.newBuilder().withDelay(10, TimeUnit.MILLISECONDS).build())
         .with(scheduler)
         .future(exec -> {
           counter.incrementAndGet();

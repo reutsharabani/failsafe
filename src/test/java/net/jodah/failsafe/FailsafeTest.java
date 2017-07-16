@@ -30,8 +30,8 @@ public class FailsafeTest {
     ScheduledExecutorService executor = Mockito.mock(ScheduledExecutorService.class);
     Scheduler scheduler = Mockito.mock(Scheduler.class);
 
-    assertTrue(Failsafe.with(new RetryPolicy()) instanceof SyncFailsafe);
-    assertTrue(Failsafe.with(new RetryPolicy()).with(executor) instanceof AsyncFailsafe);
-    assertTrue(Failsafe.with(new RetryPolicy()).with(scheduler) instanceof AsyncFailsafe);
+    assertTrue(Failsafe.with(RetryPolicy.newBuilder().build()) instanceof SyncFailsafe);
+    assertTrue(Failsafe.with(RetryPolicy.newBuilder().build()).with(executor) instanceof AsyncFailsafe);
+    assertTrue(Failsafe.with(RetryPolicy.newBuilder().build()).with(scheduler) instanceof AsyncFailsafe);
   }
 }

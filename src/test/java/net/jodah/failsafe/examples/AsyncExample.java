@@ -26,7 +26,7 @@ import net.jodah.failsafe.RetryPolicy;
 
 public class AsyncExample {
   static ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
-  static RetryPolicy retryPolicy = new RetryPolicy().withDelay(100, TimeUnit.MILLISECONDS).withJitter(.25);
+  static RetryPolicy retryPolicy = RetryPolicy.newBuilder().withDelay(100, TimeUnit.MILLISECONDS).withJitter(.25).build();
   static Service service = new Service();
 
   public static class Service {
